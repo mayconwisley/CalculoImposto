@@ -1,0 +1,6 @@
+@CalculoImposto_HostAddress = http://localhost:5012
+
+GET {{CalculoImposto_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
