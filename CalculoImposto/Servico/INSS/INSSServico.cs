@@ -1,13 +1,14 @@
 ﻿using CalculoImposto.API.MapeamentoDto.InssDto;
 using CalculoImposto.API.Repositorio.INSS;
+using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.Modelo.DTO.INSS;
 
 namespace CalculoImposto.API.Servico.INSS;
 
-public class INSSServico(INSSRepositorio iNSSRepositorio) : IINSSServico
+public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
 {
-    private readonly INSSRepositorio _INSSRepositorio = iNSSRepositorio;
+    private readonly IINSSRepositorio _INSSRepositorio = iNSSRepositorio;
 
     public async Task AtualizarInss(INSSDto inss)
     {

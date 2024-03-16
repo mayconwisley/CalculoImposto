@@ -126,6 +126,12 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
 
     public async Task<int> TotalInss(string busca)
     {
+        if (string.IsNullOrEmpty(busca))
+        {
+            busca = DateTime.Now.ToString();
+        }
+
+
         var totalInss = await _calculoImpostoContext.INSS
             .Where(w => w.Competencia == DateTime.Parse(busca))
             .CountAsync();
