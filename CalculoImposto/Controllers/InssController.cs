@@ -53,6 +53,20 @@ namespace CalculoImposto.API.Controllers
             return Ok(inssList);
         }
 
+        [HttpGet("Calculo/{strCompetencia:datetime}/{baseInss:decimal}")]
+        public async Task<ActionResult<string>> Calculo(string strCompetencia, decimal baseInss)
+        {
+            DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
+            var calculoInss = await _inssServico.CalculoInssProgressivo(competencia, baseInss);
+
+            if (!calculoInss.Any())
+            {
+                return NotFound("Sem dados");
+            }
+
+            return Ok(calculoInss);
+        }
+
         [HttpGet("Id/{id:int}", Name = "BuscarInss")]
         public async Task<ActionResult<INSSDto>> PegarPorId(int id)
         {

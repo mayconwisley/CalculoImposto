@@ -20,4 +20,6 @@ public interface IINSSServico
     Task DeletarInss(int id);
 
     Task<int> TotalInss(string busca);
+
+    Task<string> CalculoInssProgressivo(DateTime competencia, decimal baseInss);
 }
