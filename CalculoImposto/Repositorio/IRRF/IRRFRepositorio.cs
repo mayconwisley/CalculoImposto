@@ -83,7 +83,7 @@ public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRR
                         w.Competencia == _calculoImpostoContext.IRRF
                                          .Where(w => w.Competencia <= competencia)
                                          .Max(m => m.Competencia))
-            .MaxAsync(m => m.Faixa);
+            .MinAsync(m => m.Faixa);
 
         return faixa;
     }

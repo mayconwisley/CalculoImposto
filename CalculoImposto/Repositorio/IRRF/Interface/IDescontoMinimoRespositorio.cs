@@ -5,6 +5,7 @@ namespace CalculoImposto.API.Repositorio.IRRF.Interface;
 public interface IDescontoMinimoRespositorio
 {
     Task<IEnumerable<DescontoMinimoModel>> PegarTodosDescontoMinimo(int pagina, int tamanho, string busca);
+    Task<DescontoMinimoModel> PegarPorCompetenciaDescontoMinimo(DateTime competencia);
     Task<DescontoMinimoModel> PegarPorIdDescontoMinimo(int id);
     Task<DescontoMinimoModel> CriarDescontoMinimo(DescontoMinimoModel descontoMinimo);
     Task<DescontoMinimoModel> AtualizarDescontoMinimo(DescontoMinimoModel descontoMinimo);

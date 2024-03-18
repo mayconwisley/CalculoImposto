@@ -5,6 +5,7 @@ namespace CalculoImposto.API.Servico.IRRF.Interface;
 public interface ISimplicadoServico
 {
     Task<IEnumerable<SimplificadoDto>> PegarTodosSimplificado(int pagina, int tamanho, string busca);
+    Task<SimplificadoDto> PegarPorCompetenciaSimplificado(DateTime competencia);
     Task<SimplificadoDto> PegarPorIdSimplificado(int id);
     Task CriarSimplificado(SimplificadoDto simplificado);
     Task AtualizarSimplificado(SimplificadoDto simplificado);

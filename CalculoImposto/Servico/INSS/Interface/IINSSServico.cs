@@ -13,6 +13,7 @@ public interface IINSSServico
     Task<decimal> PorcentagemFaixaCompetenciaInss(DateTime competencia, int faixa);
     Task<decimal> ValorFaixaCompetenciaInss(DateTime competencia, int faixa);
     Task<decimal> ValorTetoCompetenciaInss(DateTime competencia);
+    Task<decimal> DescontoInssProgressivo(DateTime competencia, decimal baseInss);
 
     Task<INSSDto> PegarPorIdInss(int id);
     Task CriarInss(INSSDto inss);

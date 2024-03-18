@@ -87,6 +87,49 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
         }
     }
 
+    public async Task<decimal> DescontoInssProgressivo(DateTime competencia, decimal baseInss)
+    {
+        try
+        {
+            decimal desconto = 0, valorInssAnterior = 0;
+
+            decimal tetoInss = await ValorTetoCompetenciaInss(competencia);
+            decimal faixaInss = await PegarFaixaInss(competencia, baseInss);
+
+            if (baseInss > tetoInss)
+            {
+                baseInss = tetoInss;
+            }
+
+            for (int i = 1; i <= faixaInss; i++)
+            {
+                decimal porcentagemInss = await PorcentagemFaixaCompetenciaInss(competencia, i);
+                decimal valorInss = await ValorFaixaCompetenciaInss(competencia, i);
+
+                decimal baseInssCalculo = valorInss - valorInssAnterior;
+
+                if (valorInss > baseInss)
+                {
+                    baseInssCalculo = baseInss - valorInssAnterior;
+                }
+
+                if (baseInssCalculo > baseInss)
+                {
+                    baseInssCalculo = baseInss - valorInssAnterior;
+                }
+
+                desconto += (baseInssCalculo * (porcentagemInss / 100));
+                valorInssAnterior = valorInss;
+            }
+
+            return desconto;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
     public async Task<int> PegarFaixaInss(DateTime competencia, decimal baseInss)
     {
         var faixaInss = await _INSSRepositorio.PegarFaixaInss(competencia, baseInss);

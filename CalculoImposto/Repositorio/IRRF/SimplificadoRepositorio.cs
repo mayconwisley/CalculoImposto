@@ -64,6 +64,17 @@ public class SimplificadoRepositorio(CalculoImpostoContext calculoImpostoContext
             throw;
         }
     }
+    public async Task<SimplificadoModel> PegarPorCompetenciaSimplificado(DateTime competencia)
+    {
+        var simplificado = await _calculoImpostoContext.Simplificados
+            .Where(w => w.Competencia == competencia)
+            .FirstOrDefaultAsync();
+        if (simplificado is not null)
+        {
+            return simplificado;
+        }
+        return new();
+    }
     public async Task<SimplificadoModel> PegarPorIdSimplificado(int id)
     {
         try
@@ -107,7 +118,6 @@ public class SimplificadoRepositorio(CalculoImpostoContext calculoImpostoContext
              .CountAsync();
         return totalSimplificado;
     }
-
     public async Task<decimal> ValorSimplificadoCompetencia(DateTime competencia)
     {
         var valorSimplificado = await _calculoImpostoContext.Simplificados

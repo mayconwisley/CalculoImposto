@@ -16,7 +16,7 @@ public class DependenteServico(IDependenteRepositorio dependenteRepositorio) : I
 
     public async Task CriarDependente(DependenteDto dependente)
     {
-        await _dependenteRepositorio.AtualizarDependente(dependente.ConverterDtoParaDependente());
+        await _dependenteRepositorio.CriarDependente(dependente.ConverterDtoParaDependente());
     }
 
     public async Task DeletarDependente(int id)
@@ -26,6 +26,12 @@ public class DependenteServico(IDependenteRepositorio dependenteRepositorio) : I
         {
             await _dependenteRepositorio.DeletarDependente(dependente.Id);
         }
+    }
+
+    public async Task<DependenteDto> PegarPorCompetenciaDependente(DateTime competencia)
+    {
+        var dependente = await _dependenteRepositorio.PegarPorCompetenciaDependente(competencia);
+        return dependente.ConverterDependenteParaDto();
     }
 
     public async Task<DependenteDto> PegarPorIdDependente(int id)

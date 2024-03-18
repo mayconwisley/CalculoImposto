@@ -28,6 +28,12 @@ public class DescontoMinimoServico(IDescontoMinimoRespositorio descontoMinimo) :
         }
     }
 
+    public async Task<DescontoMinimoDto> PegarPorCompetenciaDescontoMinimo(DateTime competencia)
+    {
+        var descontoMinimo = await _descontoMinimo.PegarPorCompetenciaDescontoMinimo(competencia);
+        return descontoMinimo.ConverterDescontoMinimoParaDto();
+    }
+
     public async Task<DescontoMinimoDto> PegarPorIdDescontoMinimo(int id)
     {
         var descontoMinimo = await _descontoMinimo.PegarPorIdDescontoMinimo(id);

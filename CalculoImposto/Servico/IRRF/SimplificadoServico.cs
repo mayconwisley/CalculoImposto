@@ -28,6 +28,12 @@ public class SimplificadoServico(ISimplificadoRepositorio simplificado) : ISimpl
         }
     }
 
+    public async Task<SimplificadoDto> PegarPorCompetenciaSimplificado(DateTime competencia)
+    {
+        var simplificadoList = await _simplificado.PegarPorCompetenciaSimplificado(competencia);
+        return simplificadoList.ConverterSimplificadoParaDto();
+    }
+
     public async Task<SimplificadoDto> PegarPorIdSimplificado(int id)
     {
         var simplificado = await _simplificado.PegarPorIdSimplificado(id);

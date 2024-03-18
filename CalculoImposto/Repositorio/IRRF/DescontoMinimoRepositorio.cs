@@ -2,6 +2,7 @@
 using CalculoImposto.API.Model.IRRF;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace CalculoImposto.API.Repositorio.IRRF;
 
@@ -64,6 +65,27 @@ public class DescontoMinimoRepositorio(CalculoImpostoContext calculoImpostoConte
             throw;
         }
     }
+
+    public async Task<DescontoMinimoModel> PegarPorCompetenciaDescontoMinimo(DateTime competencia)
+    {
+        try
+        {
+            var descontoMinimo = await _calculoImpostoContext.DescontoMinimos
+                .Where(w => w.Competencia == competencia)
+                .FirstOrDefaultAsync();
+
+            if (descontoMinimo is not null)
+            {
+                return descontoMinimo;
+            }
+            return new();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
     public async Task<DescontoMinimoModel> PegarPorIdDescontoMinimo(int id)
     {
         try

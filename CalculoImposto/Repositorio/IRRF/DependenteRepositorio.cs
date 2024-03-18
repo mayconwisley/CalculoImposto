@@ -64,6 +64,28 @@ public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) 
             throw;
         }
     }
+
+    public async Task<DependenteModel> PegarPorCompetenciaDependente(DateTime competencia)
+    {
+        try
+        {
+            var dependente = await _calculoImpostoContext.Dependentes
+                .Where(w => w.Competencia == competencia)
+                .FirstOrDefaultAsync();
+
+            if (dependente is not null)
+            {
+                return dependente;
+            }
+
+            return new();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
     public async Task<DependenteModel> PegarPorIdDependente(int id)
     {
         try

@@ -4,136 +4,135 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace CalculoImposto.API.Controllers
+namespace CalculoImposto.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class InssController(IINSSServico inssServico) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class InssController(IINSSServico inssServico) : ControllerBase
+    readonly IINSSServico _inssServico = inssServico;
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
     {
-        readonly IINSSServico _inssServico = inssServico;
+        var inssList = await _inssServico.PegarTodosInss(pagina, tamanho, busca);
+        decimal totalInss = await _inssServico.TotalInss(busca);
+        decimal totalPagina = (totalInss / tamanho) <= 0 ? 1 : Math.Ceiling(totalInss / tamanho);
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
+        if (tamanho == 1)
         {
-            var inssList = await _inssServico.PegarTodosInss(pagina, tamanho, busca);
-            decimal totalInss = await _inssServico.TotalInss(busca);
-            decimal totalPagina = (totalInss / tamanho) <= 0 ? 1 : Math.Ceiling(totalInss / tamanho);
-
-            if (tamanho == 1)
-            {
-                totalPagina = totalInss;
-            }
-
-            if (!inssList.Any())
-            {
-                return NotFound("Sem dados");
-            }
-
-            return Ok(new
-            {
-                totalInss,
-                pagina,
-                totalPagina,
-                tamanho,
-                inssList
-            });
+            totalPagina = totalInss;
         }
 
-        [HttpGet("Competencia/{strCompetencia}")]
-        public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodosPorCompetencia(string strCompetencia)
+        if (!inssList.Any())
         {
-            DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
-            var inssList = await _inssServico.PegarTodosPorCompetenciaInss(competencia);
-
-            if (!inssList.Any())
-            {
-                return NotFound("Sem dados");
-            }
-
-            return Ok(inssList);
+            return NotFound("Sem dados");
         }
 
-        [HttpGet("Calculo/{strCompetencia}/{baseInss:decimal}")]
-        public async Task<ActionResult<string>> Calculo(string strCompetencia, decimal baseInss)
+        return Ok(new
         {
-            DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
-            var calculoInss = await _inssServico.CalculoInssProgressivo(competencia, baseInss);
+            totalInss,
+            pagina,
+            totalPagina,
+            tamanho,
+            inssList
+        });
+    }
 
-            if (!calculoInss.Any())
-            {
-                return NotFound("Sem dados");
-            }
+    [HttpGet("Competencia/{strCompetencia}")]
+    public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodosPorCompetencia(string strCompetencia)
+    {
+        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
+        var inssList = await _inssServico.PegarTodosPorCompetenciaInss(competencia);
 
-            return Ok(calculoInss);
+        if (!inssList.Any())
+        {
+            return NotFound("Sem dados");
         }
 
-        [HttpGet("{id:int}", Name = "BuscarInss")]
-        public async Task<ActionResult<INSSDto>> PegarPorId(int id)
+        return Ok(inssList);
+    }
+
+    [HttpGet("Calculo/{strCompetencia}/{baseInss:decimal}")]
+    public async Task<ActionResult<string>> Calculo(string strCompetencia, decimal baseInss)
+    {
+        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
+        var calculoInss = await _inssServico.CalculoInssProgressivo(competencia, baseInss);
+
+        if (!calculoInss.Any())
         {
-            var inss = await _inssServico.PegarPorIdInss(id);
-
-            if (inss.Id <= 0)
-            {
-                return NotFound($"Sem dados para o Id {id} informado");
-            }
-
-            if (inss is null)
-            {
-                return NotFound($"Sem dados para o Id {id} informado");
-            }
-
-            return Ok(inss);
+            return NotFound("Sem dados");
         }
 
-        [HttpPost]
-        public async Task<ActionResult<INSSDto>> Post([FromBody] INSSDto inss)
+        return Ok(calculoInss);
+    }
+
+    [HttpGet("{id:int}", Name = "BuscarInss")]
+    public async Task<ActionResult<INSSDto>> PegarPorId(int id)
+    {
+        var inss = await _inssServico.PegarPorIdInss(id);
+
+        if (inss.Id <= 0)
         {
-            if (inss is not null)
-            {
-                try
-                {
-                    await _inssServico.CriarInss(inss);
-                    return new CreatedAtRouteResult("BuscarInss", new { id = inss.Id }, inss);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            return BadRequest("Dados Invalidos");
+            return NotFound($"Sem dados para o Id {id} informado");
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult<INSSDto>> Put(int id, [FromBody] INSSDto inss)
+        if (inss is null)
         {
-            if (id != inss.Id)
-            {
-                return BadRequest("Dados Inválidos");
-            }
-            if (inss is null)
-            {
-                return BadRequest("Dados Inválidos");
-            }
-
-            await _inssServico.AtualizarInss(inss);
-            return Ok(inss);
+            return NotFound($"Sem dados para o Id {id} informado");
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult<INSSDto>> Delete(int id)
-        {
-            var inss = await _inssServico.PegarPorIdInss(id);
-            if (inss is null)
-            {
-                return NotFound("Sem dados");
-            }
-            if (inss.Id < 0)
-            {
-                return NotFound("Sem dados");
-            }
+        return Ok(inss);
+    }
 
-            await _inssServico.DeletarInss(id);
-            return Ok(inss);
+    [HttpPost]
+    public async Task<ActionResult<INSSDto>> Post([FromBody] INSSDto inss)
+    {
+        if (inss is not null)
+        {
+            try
+            {
+                await _inssServico.CriarInss(inss);
+                return new CreatedAtRouteResult("BuscarInss", new { id = inss.Id }, inss);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+        return BadRequest("Dados Invalidos");
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<INSSDto>> Put(int id, [FromBody] INSSDto inss)
+    {
+        if (id != inss.Id)
+        {
+            return BadRequest("Dados Inválidos");
+        }
+        if (inss is null)
+        {
+            return BadRequest("Dados Inválidos");
+        }
+
+        await _inssServico.AtualizarInss(inss);
+        return Ok(inss);
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult<INSSDto>> Delete(int id)
+    {
+        var inss = await _inssServico.PegarPorIdInss(id);
+        if (inss is null)
+        {
+            return NotFound("Sem dados");
+        }
+        if (inss.Id < 0)
+        {
+            return NotFound("Sem dados");
+        }
+
+        await _inssServico.DeletarInss(id);
+        return Ok(inss);
     }
 }
