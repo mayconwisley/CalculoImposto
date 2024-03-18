@@ -16,8 +16,8 @@ namespace CalculoImposto.API.Controllers
         public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
         {
             var inssList = await _inssServico.PegarTodosInss(pagina, tamanho, busca);
-            decimal totalInss = (decimal)await _inssServico.TotalInss(busca);
-            decimal totalPagina = (totalInss / tamanho) <= 0 ? 1 : Math.Ceiling((totalInss / tamanho));
+            decimal totalInss = await _inssServico.TotalInss(busca);
+            decimal totalPagina = (totalInss / tamanho) <= 0 ? 1 : Math.Ceiling(totalInss / tamanho);
 
             if (tamanho == 1)
             {
@@ -39,7 +39,7 @@ namespace CalculoImposto.API.Controllers
             });
         }
 
-        [HttpGet("Competencia/{strCompetencia:datetime}")]
+        [HttpGet("Competencia/{strCompetencia}")]
         public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodosPorCompetencia(string strCompetencia)
         {
             DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
@@ -53,7 +53,7 @@ namespace CalculoImposto.API.Controllers
             return Ok(inssList);
         }
 
-        [HttpGet("Calculo/{strCompetencia:datetime}/{baseInss:decimal}")]
+        [HttpGet("Calculo/{strCompetencia}/{baseInss:decimal}")]
         public async Task<ActionResult<string>> Calculo(string strCompetencia, decimal baseInss)
         {
             DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
@@ -67,7 +67,7 @@ namespace CalculoImposto.API.Controllers
             return Ok(calculoInss);
         }
 
-        [HttpGet("Id/{id:int}", Name = "BuscarInss")]
+        [HttpGet("{id:int}", Name = "BuscarInss")]
         public async Task<ActionResult<INSSDto>> PegarPorId(int id)
         {
             var inss = await _inssServico.PegarPorIdInss(id);
@@ -77,7 +77,7 @@ namespace CalculoImposto.API.Controllers
                 return NotFound($"Sem dados para o Id {id} informado");
             }
 
-            if (inss is not null)
+            if (inss is null)
             {
                 return NotFound($"Sem dados para o Id {id} informado");
             }

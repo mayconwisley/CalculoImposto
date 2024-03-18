@@ -15,8 +15,5 @@ public class InssConfiguracao : IEntityTypeConfiguration<INSSModel>
         builder.Property(p => p.Porcentagem)
             .HasColumnType("DECIMAL(7,4)")
             .IsRequired();
-        builder.Property(p => p.Teto)
-            .HasColumnType("DECIMAL(18,2)")
-            .IsRequired();
     }
 }

@@ -14,7 +14,6 @@ public static class INSSMapeamentoDto
                     Competencia = ins.Competencia,
                     Faixa = ins.Faixa,
                     Porcentagem = ins.Porcentagem,
-                    Teto = ins.Teto,
                     Valor = ins.Valor
 
                 }).ToList();
@@ -28,12 +27,11 @@ public static class INSSMapeamentoDto
                     Competencia = ins.Competencia,
                     Faixa = ins.Faixa,
                     Porcentagem = ins.Porcentagem,
-                    Teto = ins.Teto,
                     Valor = ins.Valor
 
                 }).ToList();
     }
-    public static INSSModel ConverteDtoInss(this INSSDto inss)
+    public static INSSModel ConverteDtoParaInss(this INSSDto inss)
     {
         return new INSSModel
         {
@@ -41,11 +39,10 @@ public static class INSSMapeamentoDto
             Competencia = inss.Competencia,
             Faixa = inss.Faixa,
             Porcentagem = inss.Porcentagem,
-            Teto = inss.Teto,
             Valor = inss.Valor
         };
     }
-    public static INSSDto ConverteInssDto(this INSSModel inss)
+    public static INSSDto ConverteInssParaDto(this INSSModel inss)
     {
         return new INSSDto
         {
@@ -53,7 +50,6 @@ public static class INSSMapeamentoDto
             Competencia = inss.Competencia,
             Faixa = inss.Faixa,
             Porcentagem = inss.Porcentagem,
-            Teto = inss.Teto,
             Valor = inss.Valor
         };
     }

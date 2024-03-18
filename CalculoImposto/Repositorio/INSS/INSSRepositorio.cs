@@ -217,8 +217,7 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
                                     .Where(w => w.Competencia == _calculoImpostoContext.INSS
                                                             .Where(w => w.Competencia <= competencia)
                                                             .Max(m => m.Competencia))
-                                    .Select(s => s.Teto)
-                                    .FirstOrDefaultAsync();
+                                    .MaxAsync(s => s.Valor);
             return valorTetoInss;
         }
         catch (Exception)

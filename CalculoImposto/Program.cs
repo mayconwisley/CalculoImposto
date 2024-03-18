@@ -1,8 +1,12 @@
 using CalculoImposto.API.Banco;
 using CalculoImposto.API.Repositorio.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
+using CalculoImposto.API.Repositorio.IRRF;
+using CalculoImposto.API.Repositorio.IRRF.Interface;
 using CalculoImposto.API.Servico.INSS;
 using CalculoImposto.API.Servico.INSS.Interface;
+using CalculoImposto.API.Servico.IRRF;
+using CalculoImposto.API.Servico.IRRF.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +24,14 @@ builder.Services.AddDbContext<CalculoImpostoContext>(cd => cd.UseSqlServer(strDa
 
 builder.Services.AddScoped<IINSSRepositorio, INSSRepositorio>();
 builder.Services.AddScoped<IINSSServico, INSSServico>();
+builder.Services.AddScoped<IIRRFRepositorio, IRRFRepositorio>();
+builder.Services.AddScoped<IIRRFServico, IRRFServico>();
+builder.Services.AddScoped<IDependenteRepositorio, DependenteRepositorio>();
+builder.Services.AddScoped<IDependenteServico, DependenteServico>();
+builder.Services.AddScoped<IDescontoMinimoRespositorio, DescontoMinimoRepositorio>();
+builder.Services.AddScoped<IDescontoMinimoServico, DescontoMinimoServico>();
+builder.Services.AddScoped<ISimplificadoRepositorio, SimplificadoRepositorio>();
+builder.Services.AddScoped<ISimplicadoServico, SimplificadoServico>();
 
 
 var app = builder.Build();

@@ -12,7 +12,7 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
 
     public async Task AtualizarInss(INSSDto inss)
     {
-        await _INSSRepositorio.AtualizarInss(inss.ConverteDtoInss());
+        await _INSSRepositorio.AtualizarInss(inss.ConverteDtoParaInss());
     }
 
     public async Task<string> CalculoInssProgressivo(DateTime competencia, decimal baseInss)
@@ -20,8 +20,9 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
         try
         {
             StringBuilder stringBuilder = new();
-            stringBuilder.Append("Informações do calculo do INSS");
-            stringBuilder.Append($"Base de calculo INSS: {baseInss:#,##0.00}");
+            stringBuilder.Append('{');
+            stringBuilder.Append(""" "Titulo": "Informações do calculo do INSS", """);
+            stringBuilder.Append($""" "Base de calculo INSS": "{baseInss:#,##0.00}", """);
 
             decimal desconto = 0, valorInssAnterior = 0;
 
@@ -53,14 +54,15 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
                 desconto += (baseInssCalculo * (porcentagemInss / 100));
                 valorInssAnterior = valorInss;
 
-                stringBuilder.Append($"{i}ª Faixa ");
-                stringBuilder.Append($"Base do INSS: {baseInssCalculo:#,##0.00} ");
-                stringBuilder.Append($"Porcentagem: {porcentagemInss:#,##0.00} ");
-                stringBuilder.Append($"Imposto: {desconto:#,##0.00}\n");
+                stringBuilder.Append($""" "Faixa":  "{i}ª Faixa", """);
+                stringBuilder.Append($""" "Base do INSS": "{baseInssCalculo:#,##0.00}", """);
+                stringBuilder.Append($""" "Porcentagem": "{porcentagemInss:#,##0.00} ", """);
+                stringBuilder.Append($""" "Imposto": "{desconto:#,##0.00}", """);
 
 
             }
-            stringBuilder.Append($"Valor total do desconto: {desconto:#,##0.00}");
+            stringBuilder.Append($"""  "Valor total do desconto": "{desconto:#,##0.00}" """);
+            stringBuilder.Append('}');
 
             return stringBuilder.ToString();
         }
@@ -73,7 +75,7 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
 
     public async Task CriarInss(INSSDto inss)
     {
-        await _INSSRepositorio.CriarInss(inss.ConverteDtoInss());
+        await _INSSRepositorio.CriarInss(inss.ConverteDtoParaInss());
     }
 
     public async Task DeletarInss(int id)
@@ -94,7 +96,7 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
     public async Task<INSSDto> PegarPorIdInss(int id)
     {
         var inss = await _INSSRepositorio.PegarPorIdInss(id);
-        return inss.ConverteInssDto();
+        return inss.ConverteInssParaDto();
     }
 
     public async Task<IEnumerable<INSSDto>> PegarTodosInss(int pagina, int tamanho, string busca)
