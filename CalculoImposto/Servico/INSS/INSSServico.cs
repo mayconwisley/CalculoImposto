@@ -2,7 +2,6 @@
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.Modelo.DTO.INSS;
-using System.Text;
 
 namespace CalculoImposto.API.Servico.INSS;
 
@@ -13,64 +12,6 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
     public async Task AtualizarInss(INSSDto inss)
     {
         await _INSSRepositorio.AtualizarInss(inss.ConverteDtoParaInss());
-    }
-
-    public async Task<string> CalculoInssProgressivo(DateTime competencia, decimal baseInss)
-    {
-        try
-        {
-            StringBuilder stringBuilder = new();
-            stringBuilder.Append('{');
-            stringBuilder.Append(""" "Titulo": "Informações do calculo do INSS", """);
-            stringBuilder.Append($""" "Base de calculo INSS": "{baseInss:#,##0.00}", """);
-
-            decimal desconto = 0, valorInssAnterior = 0;
-
-            decimal tetoInss = await ValorTetoCompetenciaInss(competencia);
-            decimal faixaInss = await PegarFaixaInss(competencia, baseInss);
-
-            if (baseInss > tetoInss)
-            {
-                baseInss = tetoInss;
-            }
-
-            for (int i = 1; i <= faixaInss; i++)
-            {
-                decimal porcentagemInss = await PorcentagemFaixaCompetenciaInss(competencia, i);
-                decimal valorInss = await ValorFaixaCompetenciaInss(competencia, i);
-
-                decimal baseInssCalculo = valorInss - valorInssAnterior;
-
-                if (valorInss > baseInss)
-                {
-                    baseInssCalculo = baseInss - valorInssAnterior;
-                }
-
-                if (baseInssCalculo > baseInss)
-                {
-                    baseInssCalculo = baseInss - valorInssAnterior;
-                }
-
-                desconto += (baseInssCalculo * (porcentagemInss / 100));
-                valorInssAnterior = valorInss;
-
-                stringBuilder.Append($""" "Faixa":  "{i}ª Faixa", """);
-                stringBuilder.Append($""" "Base do INSS": "{baseInssCalculo:#,##0.00}", """);
-                stringBuilder.Append($""" "Porcentagem": "{porcentagemInss:#,##0.00} ", """);
-                stringBuilder.Append($""" "Imposto": "{desconto:#,##0.00}", """);
-
-
-            }
-            stringBuilder.Append($"""  "Valor total do desconto": "{desconto:#,##0.00}" """);
-            stringBuilder.Append('}');
-
-            return stringBuilder.ToString();
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
     }
 
     public async Task CriarInss(INSSDto inss)

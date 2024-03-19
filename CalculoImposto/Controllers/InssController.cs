@@ -2,15 +2,13 @@
 using CalculoImposto.Modelo.DTO.INSS;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CalculoImposto.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class InssController(IINSSServico inssServico) : ControllerBase
 {
-    readonly IINSSServico _inssServico = inssServico;
+    private readonly IINSSServico _inssServico = inssServico;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
@@ -38,7 +36,6 @@ public class InssController(IINSSServico inssServico) : ControllerBase
             inssList
         });
     }
-
     [HttpGet("Competencia/{strCompetencia}")]
     public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodosPorCompetencia(string strCompetencia)
     {
@@ -52,21 +49,6 @@ public class InssController(IINSSServico inssServico) : ControllerBase
 
         return Ok(inssList);
     }
-
-    [HttpGet("Calculo/{strCompetencia}/{baseInss:decimal}")]
-    public async Task<ActionResult<string>> Calculo(string strCompetencia, decimal baseInss)
-    {
-        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
-        var calculoInss = await _inssServico.CalculoInssProgressivo(competencia, baseInss);
-
-        if (!calculoInss.Any())
-        {
-            return NotFound("Sem dados");
-        }
-
-        return Ok(calculoInss);
-    }
-
     [HttpGet("{id:int}", Name = "BuscarInss")]
     public async Task<ActionResult<INSSDto>> PegarPorId(int id)
     {
@@ -84,7 +66,6 @@ public class InssController(IINSSServico inssServico) : ControllerBase
 
         return Ok(inss);
     }
-
     [HttpPost]
     public async Task<ActionResult<INSSDto>> Post([FromBody] INSSDto inss)
     {
@@ -102,7 +83,6 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         }
         return BadRequest("Dados Invalidos");
     }
-
     [HttpPut("{id:int}")]
     public async Task<ActionResult<INSSDto>> Put(int id, [FromBody] INSSDto inss)
     {
@@ -118,7 +98,6 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         await _inssServico.AtualizarInss(inss);
         return Ok(inss);
     }
-
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<INSSDto>> Delete(int id)
     {

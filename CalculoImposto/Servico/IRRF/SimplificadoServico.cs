@@ -5,7 +5,7 @@ using CalculoImposto.Modelo.DTO.IRRF;
 
 namespace CalculoImposto.API.Servico.IRRF;
 
-public class SimplificadoServico(ISimplificadoRepositorio simplificado) : ISimplicadoServico
+public class SimplificadoServico(ISimplificadoRepositorio simplificado) : ISimplificadoServico
 {
     private readonly ISimplificadoRepositorio _simplificado = simplificado;
 

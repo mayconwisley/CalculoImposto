@@ -36,45 +36,6 @@ public class IrrfController(IIRRFServico irrfServico) : ControllerBase
             irrfList
         });
     }
-    [HttpGet("CalculoNormal/{strCompetencia}/{baseIrrf:decimal}/{baseInss:decimal}/{qtDependente:int}")]
-    public async Task<ActionResult<string>> CalculoNormal(string strCompetencia, decimal baseIrrf, decimal baseInss, int qtDependente)
-    {
-        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
-        var calculoIrrf = await _irrfServico.CalculoIrrfNormal(competencia, baseIrrf, baseInss, qtDependente);
-
-        if (!calculoIrrf.Any())
-        {
-            return NotFound("Sem dados");
-        }
-
-        return Ok(calculoIrrf);
-    }
-    [HttpGet("CalculoProgressivo/{strCompetencia}/{baseIrrf:decimal}/{baseInss:decimal}/{qtDependente:int}")]
-    public async Task<ActionResult<string>> CalculoProgressivo(string strCompetencia, decimal baseIrrf, decimal baseInss, int qtDependente)
-    {
-        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
-        var calculoIrrf = await _irrfServico.CalculoIrrfProgressivo(competencia, baseIrrf, baseInss, qtDependente);
-
-        if (!calculoIrrf.Any())
-        {
-            return NotFound("Sem dados");
-        }
-
-        return Ok(calculoIrrf);
-    }
-    [HttpGet("CalculoSimplificado/{strCompetencia}/{baseIrrf:decimal}")]
-    public async Task<ActionResult<string>> CalculoSimplificado(string strCompetencia, decimal baseIrrf)
-    {
-        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
-        var calculoIrrf = await _irrfServico.CalculoIrrfSimplificado(competencia, baseIrrf);
-
-        if (!calculoIrrf.Any())
-        {
-            return NotFound("Sem dados");
-        }
-
-        return Ok(calculoIrrf);
-    }
     [HttpGet("{id:int}", Name = "BuscarIrrf")]
     public async Task<ActionResult<IRRFDto>> PegarPorId(int id)
     {

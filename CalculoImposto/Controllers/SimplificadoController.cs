@@ -6,9 +6,9 @@ namespace CalculoImposto.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SimplificadoController(ISimplicadoServico simplicadoServico) : ControllerBase
+public class SimplificadoController(ISimplificadoServico simplicadoServico) : ControllerBase
 {
-    readonly ISimplicadoServico _simplicadoServico = simplicadoServico;
+    readonly ISimplificadoServico _simplicadoServico = simplicadoServico;
 
     [HttpGet]
     public async Task<ActionResult<SimplificadoDto>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")

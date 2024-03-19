@@ -10,7 +10,7 @@ public interface IIRRFRepositorio
     Task<IRRFModel> AtualizarIrrf(IRRFModel irrf);
     Task<IRRFModel> DeletarIrrf(int id);
     Task<int> TotalIrrf();
-    Task<int> PegarFaixaIrrf(DateTime competencia, decimal baseIrrf);
+    Task<int> PegarFaixaIrrf(DateTime competencia, decimal valorBrutoIrrf);
     Task<decimal> PorcentagemFaixaCompetenciaIrrf(DateTime competencia, int faixa);
     Task<decimal> DeducaoFaixaCompetenciaIrrf(DateTime competencia, int faixa);
     Task<decimal> ValorFaixaCompetenciaIrrf(DateTime competencia, int faixa);

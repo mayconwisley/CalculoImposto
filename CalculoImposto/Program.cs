@@ -3,6 +3,8 @@ using CalculoImposto.API.Repositorio.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Repositorio.IRRF;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
+using CalculoImposto.API.Servico.Calculo;
+using CalculoImposto.API.Servico.Calculo.Interface;
 using CalculoImposto.API.Servico.INSS;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.API.Servico.IRRF;
@@ -31,8 +33,8 @@ builder.Services.AddScoped<IDependenteServico, DependenteServico>();
 builder.Services.AddScoped<IDescontoMinimoRespositorio, DescontoMinimoRepositorio>();
 builder.Services.AddScoped<IDescontoMinimoServico, DescontoMinimoServico>();
 builder.Services.AddScoped<ISimplificadoRepositorio, SimplificadoRepositorio>();
-builder.Services.AddScoped<ISimplicadoServico, SimplificadoServico>();
-
+builder.Services.AddScoped<ISimplificadoServico, SimplificadoServico>();
+builder.Services.AddScoped<ICalculoImpostoServico, CalculoImpostoServico>();
 
 var app = builder.Build();
 

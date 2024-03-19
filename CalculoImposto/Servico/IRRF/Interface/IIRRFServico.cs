@@ -14,7 +14,4 @@ public interface IIRRFServico
     Task<decimal> PorcentagemFaixaCompetenciaIrrf(DateTime competencia, int faixa);
     Task<decimal> DeducaoFaixaCompetenciaIrrf(DateTime competencia, int faixa);
     Task<decimal> ValorFaixaCompetenciaIrrf(DateTime competencia, int faixa);
-    Task<string> CalculoIrrfSimplificado(DateTime competencia, decimal valorBruto);
-    Task<string> CalculoIrrfNormal(DateTime competencia, decimal valorBruto, decimal baseInss, int qtdDependete);
-    Task<string> CalculoIrrfProgressivo(DateTime competencia, decimal valorBruto, decimal baseInss, int qtdDependete);
 }

@@ -1,6 +1,5 @@
 ﻿using CalculoImposto.API.Servico.IRRF.Interface;
 using CalculoImposto.Modelo.DTO.IRRF;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalculoImposto.API.Controllers;
@@ -37,7 +36,6 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
             dependenteList
         });
     }
-
     [HttpGet("{id:int}", Name = "BuscarDependente")]
     public async Task<ActionResult<DependenteDto>> PegarPorId(int id)
     {
@@ -48,8 +46,6 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
         }
         return NotFound();
     }
-
-
     [HttpGet("Competencia/{strComeptencia}")]
     public async Task<ActionResult<DependenteDto>> PegarPorCompetencia(string strComeptencia)
     {
@@ -69,7 +65,6 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
             throw;
         }
     }
-
     [HttpPost]
     public async Task<ActionResult<DependenteDto>> Post([FromBody] DependenteDto dependente)
     {
@@ -88,7 +83,6 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
         }
         return BadRequest();
     }
-
     [HttpPut("{id:int}")]
     public async Task<ActionResult<DependenteDto>> Put(int id, [FromBody] DependenteDto dependente)
     {
@@ -117,7 +111,6 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
         }
         return BadRequest();
     }
-
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<DependenteDto>> Delete(int id)
     {

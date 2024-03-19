@@ -76,10 +76,10 @@ public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRR
             throw;
         }
     }
-    public async Task<int> PegarFaixaIrrf(DateTime competencia, decimal baseIrrf)
+    public async Task<int> PegarFaixaIrrf(DateTime competencia, decimal valorBrutoIrrf)
     {
         var faixa = await _calculoImpostoContext.IRRF
-            .Where(w => w.Valor >= baseIrrf &&
+            .Where(w => w.Valor >= valorBrutoIrrf &&
                         w.Competencia == _calculoImpostoContext.IRRF
                                          .Where(w => w.Competencia <= competencia)
                                          .Max(m => m.Competencia))
