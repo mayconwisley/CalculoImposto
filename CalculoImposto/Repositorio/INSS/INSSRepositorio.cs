@@ -119,7 +119,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
         }
         catch (Exception)
         {
-
             throw;
         }
     }

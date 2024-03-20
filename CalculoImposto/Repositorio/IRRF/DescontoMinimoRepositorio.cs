@@ -2,7 +2,6 @@
 using CalculoImposto.API.Model.IRRF;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 
 namespace CalculoImposto.API.Repositorio.IRRF;
 

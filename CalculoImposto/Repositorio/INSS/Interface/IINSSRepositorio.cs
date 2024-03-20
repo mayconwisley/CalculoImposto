@@ -6,7 +6,7 @@ public interface IInssRepositorio
 {
     Task<IEnumerable<InssModel>> PegarTodosInss(int pagina, int tamanho, string busca);
     Task<IEnumerable<InssModel>> PegarTodosPorCompetenciaInss(DateTime competencia);
-    
+
     Task<int> PegarFaixaInss(DateTime competencia, decimal baseInss);
     Task<int> UltimaFaixaCompetenciaInss(DateTime competencia);
 
@@ -18,6 +18,6 @@ public interface IInssRepositorio
     Task<InssModel> CriarInss(InssModel inss);
     Task<InssModel> AtualizarInss(InssModel inss);
     Task<InssModel> DeletarInss(int id);
-    
+
     Task<int> TotalInss(string busca);
 }

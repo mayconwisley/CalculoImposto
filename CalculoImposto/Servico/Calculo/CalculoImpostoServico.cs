@@ -33,12 +33,13 @@ public class CalculoImpostoServico(IIrrfServico iRRFServico,
             decimal desconto = 0, valorInssAnterior = 0, totalDesconto = 0;
 
             decimal tetoInss = await _INSSServico.ValorTetoCompetenciaInss(competencia);
-            decimal faixaInss = await _INSSServico.PegarFaixaInss(competencia, baseInss);
 
             if (baseInss > tetoInss)
             {
                 baseInss = tetoInss;
             }
+
+            decimal faixaInss = await _INSSServico.PegarFaixaInss(competencia, baseInss);
 
             for (int i = 1; i <= faixaInss; i++)
             {

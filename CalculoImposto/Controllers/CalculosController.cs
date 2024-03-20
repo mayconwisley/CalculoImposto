@@ -10,7 +10,7 @@ namespace CalculoImposto.API.Controllers;
 public class CalculosController(ICalculoImpostoServico calculoImposto) : ControllerBase
 {
     private readonly ICalculoImpostoServico _calculoImposto = calculoImposto;
-    
+
     [HttpGet("Inss/Progressivo/{strCompetencia}/{baseInss:decimal}")]
     public async Task<ActionResult<CalculoInssProgressivoDto>> Calculo(string strCompetencia, decimal baseInss)
     {

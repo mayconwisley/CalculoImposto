@@ -1,6 +1,21 @@
 @CalculoImposto_HostAddress = http://localhost:5012
 
-GET {{CalculoImposto_HostAddress}}/weatherforecast/
+GET {{CalculoImposto_HostAddress}}/api/Inss/
 Accept: application/json
+###
 
+GET {{CalculoImposto_HostAddress}}/api/Irrf/
+Accept: application/json
+###
+
+GET {{CalculoImposto_HostAddress}}/api/Dependente/
+Accept: application/json
+###
+
+GET {{CalculoImposto_HostAddress}}/api/Simplificado/
+Accept: application/json
+###
+
+GET {{CalculoImposto_HostAddress}}/api/DescontoMinimo/
+Accept: application/json
 ###
