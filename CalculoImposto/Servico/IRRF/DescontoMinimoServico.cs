@@ -1,4 +1,4 @@
-﻿using CalculoImposto.API.MapeamentoDto.IrrfDt;
+﻿using CalculoImposto.API.MapeamentoDto.IRRF;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
 using CalculoImposto.API.Servico.IRRF.Interface;
 using CalculoImposto.Modelo.DTO.IRRF;

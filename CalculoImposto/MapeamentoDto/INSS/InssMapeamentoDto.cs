@@ -1,7 +1,7 @@
 ﻿using CalculoImposto.API.Model.INSS;
 using CalculoImposto.Modelo.DTO.INSS;
 
-namespace CalculoImposto.API.MapeamentoDto.InssDt;
+namespace CalculoImposto.API.MapeamentoDto.INSS;
 
 public static class InssMapeamentoDto
 {

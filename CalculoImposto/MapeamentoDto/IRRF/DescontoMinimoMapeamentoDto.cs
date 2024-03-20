@@ -1,7 +1,7 @@
 ﻿using CalculoImposto.API.Model.IRRF;
 using CalculoImposto.Modelo.DTO.IRRF;
 
-namespace CalculoImposto.API.MapeamentoDto.IrrfDt;
+namespace CalculoImposto.API.MapeamentoDto.IRRF;
 
 public static class DescontoMinimoMapeamentoDto
 {

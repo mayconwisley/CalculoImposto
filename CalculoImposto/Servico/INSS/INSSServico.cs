@@ -1,4 +1,4 @@
-﻿using CalculoImposto.API.MapeamentoDto.InssDt;
+﻿using CalculoImposto.API.MapeamentoDto.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.Modelo.DTO.INSS;
