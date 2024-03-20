@@ -6,12 +6,12 @@ namespace CalculoImposto.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class IrrfController(IIRRFServico irrfServico) : ControllerBase
+public class IrrfController(IIrrfServico irrfServico) : ControllerBase
 {
-    private readonly IIRRFServico _irrfServico = irrfServico;
+    private readonly IIrrfServico _irrfServico = irrfServico;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<IRRFDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
+    public async Task<ActionResult<IEnumerable<IrrfDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
     {
         var irrfList = await _irrfServico.PegarTodosIrrf(pagina, tamanho, busca);
         decimal totalIrrf = await _irrfServico.TotalIrrf();
@@ -37,7 +37,7 @@ public class IrrfController(IIRRFServico irrfServico) : ControllerBase
         });
     }
     [HttpGet("{id:int}", Name = "BuscarIrrf")]
-    public async Task<ActionResult<IRRFDto>> PegarPorId(int id)
+    public async Task<ActionResult<IrrfDto>> PegarPorId(int id)
     {
         var irrf = await _irrfServico.PegarPorIdIrrf(id);
 
@@ -53,8 +53,22 @@ public class IrrfController(IIRRFServico irrfServico) : ControllerBase
 
         return Ok(irrf);
     }
+    [HttpGet("Competencia/{strCompetencia}")]
+    public async Task<ActionResult<IEnumerable<IrrfDto>>> PegarPorCompetencia(string strCompetencia)
+    {
+        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
+        var irrfList = await _irrfServico.PegarPorCompetenciaIrrf(competencia);
+
+        if (irrfList is null)
+        {
+            return NotFound($"Sem dados para o Competencia {competencia} informado");
+        }
+
+        return Ok(irrfList);
+    }
+
     [HttpPost]
-    public async Task<ActionResult<IRRFDto>> Post([FromBody] IRRFDto irrf)
+    public async Task<ActionResult<IrrfDto>> Post([FromBody] IrrfDto irrf)
     {
         if (irrf is not null)
         {
@@ -71,7 +85,7 @@ public class IrrfController(IIRRFServico irrfServico) : ControllerBase
         return BadRequest("Dados Invalidos");
     }
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<IRRFDto>> Put(int id, [FromBody] IRRFDto irrf)
+    public async Task<ActionResult<IrrfDto>> Put(int id, [FromBody] IrrfDto irrf)
     {
         if (id != irrf.Id)
         {
@@ -86,7 +100,7 @@ public class IrrfController(IIRRFServico irrfServico) : ControllerBase
         return Ok(irrf);
     }
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult<IRRFDto>> Delete(int id)
+    public async Task<ActionResult<IrrfDto>> Delete(int id)
     {
         var irrf = await _irrfServico.PegarPorIdIrrf(id);
         if (irrf is null)

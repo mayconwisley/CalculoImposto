@@ -2,7 +2,7 @@
 
 namespace CalculoImposto.Modelo.DTO.IRRF;
 
-public class IRRFDto : InformacaoBaseDto
+public class IrrfDto : InformacaoBaseDto
 {
     [Required(ErrorMessage = "Informar a faixa")]
     public int Faixa { get; set; }

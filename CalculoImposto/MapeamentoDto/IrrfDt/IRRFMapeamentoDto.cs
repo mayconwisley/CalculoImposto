@@ -1,58 +1,62 @@
-﻿using CalculoImposto.API.Model.INSS;
-using CalculoImposto.API.Model.IRRF;
-using CalculoImposto.Modelo.DTO.INSS;
+﻿using CalculoImposto.API.Model.IRRF;
 using CalculoImposto.Modelo.DTO.IRRF;
 
-namespace CalculoImposto.API.MapeamentoDto.IrrfDto;
+namespace CalculoImposto.API.MapeamentoDto.IrrfDt;
 
-public  static class IRRFMapeamentoDto
+public static class IrrfMapeamentoDto
 {
-    public static IEnumerable<IRRFDto> ConverterIrrfParaDtos(this IEnumerable<IRRFModel> irrf)
+    public static IEnumerable<IrrfDto> ConverterIrrfParaDtos(this IEnumerable<IrrfModel> irrf)
     {
         return (from irr in irrf
-                select new IRRFDto
+                select new IrrfDto
                 {
                     Id = irr.Id,
                     Competencia = irr.Competencia,
                     Faixa = irr.Faixa,
                     Porcentagem = irr.Porcentagem,
-                    Valor = irr.Valor
+                    Valor = irr.Valor,
+                    Deducao = irr.Deducao
+
 
                 }).ToList();
     }
-    public static IEnumerable<IRRFModel> ConverterDtosParaIrrf(this IEnumerable<IRRFDto> irrf)
+    public static IEnumerable<IrrfModel> ConverterDtosParaIrrf(this IEnumerable<IrrfDto> irrf)
     {
         return (from irr in irrf
-                select new IRRFModel
+                select new IrrfModel
                 {
                     Id = irr.Id,
                     Competencia = irr.Competencia,
                     Faixa = irr.Faixa,
                     Porcentagem = irr.Porcentagem,
-                    Valor = irr.Valor
+                    Valor = irr.Valor,
+                    Deducao = irr.Deducao
+
 
                 }).ToList();
     }
-    public static IRRFModel ConverteDtoParaIrrf(this IRRFDto irrf)
+    public static IrrfModel ConverteDtoParaIrrf(this IrrfDto irrf)
     {
-        return new IRRFModel
+        return new IrrfModel
         {
             Id = irrf.Id,
             Competencia = irrf.Competencia,
             Faixa = irrf.Faixa,
             Porcentagem = irrf.Porcentagem,
-            Valor = irrf.Valor
+            Valor = irrf.Valor,
+            Deducao = irrf.Deducao
         };
     }
-    public static IRRFDto ConverteIrrfParaDto(this IRRFModel irrf)
+    public static IrrfDto ConverteIrrfParaDto(this IrrfModel irrf)
     {
-        return new IRRFDto
+        return new IrrfDto
         {
             Id = irrf.Id,
             Competencia = irrf.Competencia,
             Faixa = irrf.Faixa,
             Porcentagem = irrf.Porcentagem,
-            Valor = irrf.Valor
+            Valor = irrf.Valor,
+            Deducao = irrf.Deducao
         };
     }
 }

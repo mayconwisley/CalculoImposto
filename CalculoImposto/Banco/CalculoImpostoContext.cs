@@ -12,8 +12,8 @@ public class CalculoImpostoContext(DbContextOptions<CalculoImpostoContext> optio
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    public DbSet<INSSModel> INSS { get; set; }
-    public DbSet<IRRFModel> IRRF { get; set; }
+    public DbSet<InssModel> INSS { get; set; }
+    public DbSet<IrrfModel> IRRF { get; set; }
     public DbSet<DependenteModel> Dependentes { get; set; }
     public DbSet<DescontoMinimoModel> DescontoMinimos { get; set; }
     public DbSet<SimplificadoModel> Simplificados { get; set; }

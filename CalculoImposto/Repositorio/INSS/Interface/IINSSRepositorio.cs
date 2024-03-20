@@ -2,10 +2,10 @@
 
 namespace CalculoImposto.API.Repositorio.INSS.Interface;
 
-public interface IINSSRepositorio
+public interface IInssRepositorio
 {
-    Task<IEnumerable<INSSModel>> PegarTodosInss(int pagina, int tamanho, string busca);
-    Task<IEnumerable<INSSModel>> PegarTodosPorCompetenciaInss(DateTime competencia);
+    Task<IEnumerable<InssModel>> PegarTodosInss(int pagina, int tamanho, string busca);
+    Task<IEnumerable<InssModel>> PegarTodosPorCompetenciaInss(DateTime competencia);
     
     Task<int> PegarFaixaInss(DateTime competencia, decimal baseInss);
     Task<int> UltimaFaixaCompetenciaInss(DateTime competencia);
@@ -14,10 +14,10 @@ public interface IINSSRepositorio
     Task<decimal> ValorFaixaCompetenciaInss(DateTime competencia, int faixa);
     Task<decimal> ValorTetoCompetenciaInss(DateTime competencia);
 
-    Task<INSSModel> PegarPorIdInss(int id);
-    Task<INSSModel> CriarInss(INSSModel inss);
-    Task<INSSModel> AtualizarInss(INSSModel inss);
-    Task<INSSModel> DeletarInss(int id);
+    Task<InssModel> PegarPorIdInss(int id);
+    Task<InssModel> CriarInss(InssModel inss);
+    Task<InssModel> AtualizarInss(InssModel inss);
+    Task<InssModel> DeletarInss(int id);
     
     Task<int> TotalInss(string busca);
 }

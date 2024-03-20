@@ -7,15 +7,15 @@ using CalculoImposto.Modelo.DTO.IRRF;
 
 namespace CalculoImposto.API.Servico.Calculo;
 
-public class CalculoImpostoServico(IIRRFServico iRRFServico,
-        IINSSServico iNSSServico,
+public class CalculoImpostoServico(IIrrfServico iRRFServico,
+        IInssServico iNSSServico,
         IDependenteServico dependente,
         ISimplificadoServico simplificado,
         IDescontoMinimoServico descontoMinimo) : ICalculoImpostoServico
 {
 
-    public readonly IIRRFServico _IRRFServico = iRRFServico;
-    public readonly IINSSServico _INSSServico = iNSSServico;
+    public readonly IIrrfServico _IRRFServico = iRRFServico;
+    public readonly IInssServico _INSSServico = iNSSServico;
     public readonly IDependenteServico _dependente = dependente;
     public readonly ISimplificadoServico _simplificado = simplificado;
     public readonly IDescontoMinimoServico _descontoMinimo = descontoMinimo;

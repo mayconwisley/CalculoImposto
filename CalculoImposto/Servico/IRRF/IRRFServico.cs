@@ -1,18 +1,18 @@
-﻿using CalculoImposto.API.MapeamentoDto.IrrfDto;
+﻿using CalculoImposto.API.MapeamentoDto.IrrfDt;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
 using CalculoImposto.API.Servico.IRRF.Interface;
 using CalculoImposto.Modelo.DTO.IRRF;
 
 namespace CalculoImposto.API.Servico.IRRF;
 
-public class IRRFServico(IIRRFRepositorio iRRFRepositorio) : IIRRFServico
+public class IrrfServico(IIrrfRepositorio iRRFRepositorio) : IIrrfServico
 {
-    public readonly IIRRFRepositorio _IRRFRepositorio = iRRFRepositorio;
-    public async Task AtualizarIrrf(IRRFDto irrf)
+    public readonly IIrrfRepositorio _IRRFRepositorio = iRRFRepositorio;
+    public async Task AtualizarIrrf(IrrfDto irrf)
     {
         await _IRRFRepositorio.AtualizarIrrf(irrf.ConverteDtoParaIrrf());
     }
-    public async Task CriarIrrf(IRRFDto irrf)
+    public async Task CriarIrrf(IrrfDto irrf)
     {
         await _IRRFRepositorio.CriarIrrf(irrf.ConverteDtoParaIrrf());
     }
@@ -36,12 +36,19 @@ public class IRRFServico(IIRRFRepositorio iRRFRepositorio) : IIRRFServico
         var faixa = await _IRRFRepositorio.PegarFaixaIrrf(competencia, valorBrutoIrrf);
         return faixa;
     }
-    public async Task<IRRFDto> PegarPorIdIrrf(int id)
+
+    public async Task<IEnumerable<IrrfDto>> PegarPorCompetenciaIrrf(DateTime competencia)
+    {
+        var irrfList = await _IRRFRepositorio.PegarPorCompetenciaIrrf(competencia);
+        return irrfList.ConverterIrrfParaDtos();
+    }
+
+    public async Task<IrrfDto> PegarPorIdIrrf(int id)
     {
         var irrf = await _IRRFRepositorio.PegarPorIdIrrf(id);
         return irrf.ConverteIrrfParaDto();
     }
-    public async Task<IEnumerable<IRRFDto>> PegarTodosIrrf(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<IrrfDto>> PegarTodosIrrf(int pagina, int tamanho, string busca)
     {
         var irrfList = await _IRRFRepositorio.PegarTodosIrrf(pagina, tamanho, busca);
         return irrfList.ConverterIrrfParaDtos();

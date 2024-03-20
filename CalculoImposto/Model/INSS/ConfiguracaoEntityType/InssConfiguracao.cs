@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CalculoImposto.API.Model.INSS.ConfiguracaoEntityType;
 
-public class InssConfiguracao : IEntityTypeConfiguration<INSSModel>
+public class InssConfiguracao : IEntityTypeConfiguration<InssModel>
 {
-    public void Configure(EntityTypeBuilder<INSSModel> builder)
+    public void Configure(EntityTypeBuilder<InssModel> builder)
     {
         builder.Property(p => p.Faixa)
                .IsRequired();

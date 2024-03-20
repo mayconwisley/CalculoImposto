@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.IRRF;
 
-public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRRFRepositorio
+public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrrfRepositorio
 {
     private readonly CalculoImpostoContext _calculoImpostoContext = calculoImpostoContext;
 
-    public async Task<IRRFModel> AtualizarIrrf(IRRFModel irrf)
+    public async Task<IrrfModel> AtualizarIrrf(IrrfModel irrf)
     {
         try
         {
@@ -27,7 +27,7 @@ public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRR
             throw;
         }
     }
-    public async Task<IRRFModel> CriarIrrf(IRRFModel irrf)
+    public async Task<IrrfModel> CriarIrrf(IrrfModel irrf)
     {
         try
         {
@@ -57,7 +57,7 @@ public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRR
         return deducao;
 
     }
-    public async Task<IRRFModel> DeletarIrrf(int id)
+    public async Task<IrrfModel> DeletarIrrf(int id)
     {
         try
         {
@@ -87,7 +87,29 @@ public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRR
 
         return faixa;
     }
-    public async Task<IRRFModel> PegarPorIdIrrf(int id)
+
+    public async Task<IEnumerable<IrrfModel>> PegarPorCompetenciaIrrf(DateTime competencia)
+    {
+        try
+        {
+            var irrfList = await _calculoImpostoContext.IRRF
+                .Where(w => w.Competencia == competencia)
+                .ToListAsync();
+
+            if (irrfList is not null)
+            {
+                return irrfList;
+            }
+            return [];
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    public async Task<IrrfModel> PegarPorIdIrrf(int id)
     {
         try
         {
@@ -107,7 +129,7 @@ public class IRRFRepositorio(CalculoImpostoContext calculoImpostoContext) : IIRR
             throw;
         }
     }
-    public async Task<IEnumerable<IRRFModel>> PegarTodosIrrf(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<IrrfModel>> PegarTodosIrrf(int pagina, int tamanho, string busca)
     {
         try
         {

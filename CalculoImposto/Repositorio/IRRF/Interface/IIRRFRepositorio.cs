@@ -2,13 +2,14 @@
 
 namespace CalculoImposto.API.Repositorio.IRRF.Interface;
 
-public interface IIRRFRepositorio
+public interface IIrrfRepositorio
 {
-    Task<IEnumerable<IRRFModel>> PegarTodosIrrf(int pagina, int tamanho, string busca);
-    Task<IRRFModel> PegarPorIdIrrf(int id);
-    Task<IRRFModel> CriarIrrf(IRRFModel irrf);
-    Task<IRRFModel> AtualizarIrrf(IRRFModel irrf);
-    Task<IRRFModel> DeletarIrrf(int id);
+    Task<IEnumerable<IrrfModel>> PegarTodosIrrf(int pagina, int tamanho, string busca);
+    Task<IrrfModel> PegarPorIdIrrf(int id);
+    Task<IEnumerable<IrrfModel>> PegarPorCompetenciaIrrf(DateTime competencia);
+    Task<IrrfModel> CriarIrrf(IrrfModel irrf);
+    Task<IrrfModel> AtualizarIrrf(IrrfModel irrf);
+    Task<IrrfModel> DeletarIrrf(int id);
     Task<int> TotalIrrf();
     Task<int> PegarFaixaIrrf(DateTime competencia, decimal valorBrutoIrrf);
     Task<decimal> PorcentagemFaixaCompetenciaIrrf(DateTime competencia, int faixa);

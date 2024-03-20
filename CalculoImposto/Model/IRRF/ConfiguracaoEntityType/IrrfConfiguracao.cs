@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CalculoImposto.API.Model.IRRF.ConfiguracaoEntityType;
 
-public class IrrfConfiguracao : IEntityTypeConfiguration<IRRFModel>
+public class IrrfConfiguracao : IEntityTypeConfiguration<IrrfModel>
 {
-    public void Configure(EntityTypeBuilder<IRRFModel> builder)
+    public void Configure(EntityTypeBuilder<IrrfModel> builder)
     {
         builder.Property(p => p.Faixa)
             .IsRequired();

@@ -1,20 +1,20 @@
-﻿using CalculoImposto.API.MapeamentoDto.InssDto;
+﻿using CalculoImposto.API.MapeamentoDto.InssDt;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.Modelo.DTO.INSS;
 
 namespace CalculoImposto.API.Servico.INSS;
 
-public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
+public class InssServico(IInssRepositorio iNSSRepositorio) : IInssServico
 {
-    private readonly IINSSRepositorio _INSSRepositorio = iNSSRepositorio;
+    private readonly IInssRepositorio _INSSRepositorio = iNSSRepositorio;
 
-    public async Task AtualizarInss(INSSDto inss)
+    public async Task AtualizarInss(InssDto inss)
     {
         await _INSSRepositorio.AtualizarInss(inss.ConverteDtoParaInss());
     }
 
-    public async Task CriarInss(INSSDto inss)
+    public async Task CriarInss(InssDto inss)
     {
         await _INSSRepositorio.CriarInss(inss.ConverteDtoParaInss());
     }
@@ -77,19 +77,19 @@ public class INSSServico(IINSSRepositorio iNSSRepositorio) : IINSSServico
         return faixaInss;
     }
 
-    public async Task<INSSDto> PegarPorIdInss(int id)
+    public async Task<InssDto> PegarPorIdInss(int id)
     {
         var inss = await _INSSRepositorio.PegarPorIdInss(id);
         return inss.ConverteInssParaDto();
     }
 
-    public async Task<IEnumerable<INSSDto>> PegarTodosInss(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<InssDto>> PegarTodosInss(int pagina, int tamanho, string busca)
     {
         var inssList = await _INSSRepositorio.PegarTodosInss(pagina, tamanho, busca);
         return inssList.ConverterInssParaDtos();
     }
 
-    public async Task<IEnumerable<INSSDto>> PegarTodosPorCompetenciaInss(DateTime competencia)
+    public async Task<IEnumerable<InssDto>> PegarTodosPorCompetenciaInss(DateTime competencia)
     {
         var inssList = await _INSSRepositorio.PegarTodosPorCompetenciaInss(competencia);
         return inssList.ConverterInssParaDtos();

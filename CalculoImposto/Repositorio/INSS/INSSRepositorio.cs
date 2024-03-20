@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.INSS;
 
-public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINSSRepositorio
+public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IInssRepositorio
 {
     private readonly CalculoImpostoContext _calculoImpostoContext = calculoImpostoContext;
 
-    public async Task<INSSModel> AtualizarInss(INSSModel inss)
+    public async Task<InssModel> AtualizarInss(InssModel inss)
     {
         try
         {
@@ -27,7 +27,7 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
         }
     }
 
-    public async Task<INSSModel> CriarInss(INSSModel inss)
+    public async Task<InssModel> CriarInss(InssModel inss)
     {
         try
         {
@@ -45,7 +45,7 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
         }
     }
 
-    public async Task<INSSModel> DeletarInss(int id)
+    public async Task<InssModel> DeletarInss(int id)
     {
         try
         {
@@ -64,7 +64,7 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
         }
     }
 
-    public async Task<IEnumerable<INSSModel>> PegarTodosPorCompetenciaInss(DateTime competencia)
+    public async Task<IEnumerable<InssModel>> PegarTodosPorCompetenciaInss(DateTime competencia)
     {
         try
         {
@@ -85,7 +85,7 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
         }
     }
 
-    public async Task<INSSModel> PegarPorIdInss(int id)
+    public async Task<InssModel> PegarPorIdInss(int id)
     {
         try
         {
@@ -106,7 +106,7 @@ public class INSSRepositorio(CalculoImpostoContext calculoImpostoContext) : IINS
         }
     }
 
-    public async Task<IEnumerable<INSSModel>> PegarTodosInss(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<InssModel>> PegarTodosInss(int pagina, int tamanho, string busca)
     {
         try
         {

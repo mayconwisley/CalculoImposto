@@ -24,10 +24,10 @@ var passDatabase = Environment.GetEnvironmentVariable("SQLSenha", EnvironmentVar
 string strDatabase = builder.Configuration.GetConnectionString("CalculoImposto")!.Replace("{{pass}}", passDatabase);
 builder.Services.AddDbContext<CalculoImpostoContext>(cd => cd.UseSqlServer(strDatabase));
 
-builder.Services.AddScoped<IINSSRepositorio, INSSRepositorio>();
-builder.Services.AddScoped<IINSSServico, INSSServico>();
-builder.Services.AddScoped<IIRRFRepositorio, IRRFRepositorio>();
-builder.Services.AddScoped<IIRRFServico, IRRFServico>();
+builder.Services.AddScoped<IInssRepositorio, InssRepositorio>();
+builder.Services.AddScoped<IInssServico, InssServico>();
+builder.Services.AddScoped<IIrrfRepositorio, IrrfRepositorio>();
+builder.Services.AddScoped<IIrrfServico, IrrfServico>();
 builder.Services.AddScoped<IDependenteRepositorio, DependenteRepositorio>();
 builder.Services.AddScoped<IDependenteServico, DependenteServico>();
 builder.Services.AddScoped<IDescontoMinimoRespositorio, DescontoMinimoRepositorio>();

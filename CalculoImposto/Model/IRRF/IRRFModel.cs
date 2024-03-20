@@ -1,6 +1,6 @@
 ﻿namespace CalculoImposto.API.Model.IRRF;
 
-public class IRRFModel : InformacaoBaseModel
+public class IrrfModel : InformacaoBaseModel
 {
     public int Faixa { get; set; }
     public decimal Porcentagem { get; set; }

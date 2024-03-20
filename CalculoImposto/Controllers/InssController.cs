@@ -6,12 +6,12 @@ namespace CalculoImposto.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class InssController(IINSSServico inssServico) : ControllerBase
+public class InssController(IInssServico inssServico) : ControllerBase
 {
-    private readonly IINSSServico _inssServico = inssServico;
+    private readonly IInssServico _inssServico = inssServico;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
+    public async Task<ActionResult<IEnumerable<InssDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
     {
         var inssList = await _inssServico.PegarTodosInss(pagina, tamanho, busca);
         decimal totalInss = await _inssServico.TotalInss(busca);
@@ -37,7 +37,7 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         });
     }
     [HttpGet("Competencia/{strCompetencia}")]
-    public async Task<ActionResult<IEnumerable<INSSDto>>> PegarTodosPorCompetencia(string strCompetencia)
+    public async Task<ActionResult<IEnumerable<InssDto>>> PegarTodosPorCompetencia(string strCompetencia)
     {
         DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
         var inssList = await _inssServico.PegarTodosPorCompetenciaInss(competencia);
@@ -50,7 +50,7 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         return Ok(inssList);
     }
     [HttpGet("{id:int}", Name = "BuscarInss")]
-    public async Task<ActionResult<INSSDto>> PegarPorId(int id)
+    public async Task<ActionResult<InssDto>> PegarPorId(int id)
     {
         var inss = await _inssServico.PegarPorIdInss(id);
 
@@ -67,7 +67,7 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         return Ok(inss);
     }
     [HttpPost]
-    public async Task<ActionResult<INSSDto>> Post([FromBody] INSSDto inss)
+    public async Task<ActionResult<InssDto>> Post([FromBody] InssDto inss)
     {
         if (inss is not null)
         {
@@ -84,7 +84,7 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         return BadRequest("Dados Invalidos");
     }
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<INSSDto>> Put(int id, [FromBody] INSSDto inss)
+    public async Task<ActionResult<InssDto>> Put(int id, [FromBody] InssDto inss)
     {
         if (id != inss.Id)
         {
@@ -99,7 +99,7 @@ public class InssController(IINSSServico inssServico) : ControllerBase
         return Ok(inss);
     }
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult<INSSDto>> Delete(int id)
+    public async Task<ActionResult<InssDto>> Delete(int id)
     {
         var inss = await _inssServico.PegarPorIdInss(id);
         if (inss is null)

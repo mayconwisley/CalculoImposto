@@ -1,14 +1,14 @@
 ﻿using CalculoImposto.API.Model.INSS;
 using CalculoImposto.Modelo.DTO.INSS;
 
-namespace CalculoImposto.API.MapeamentoDto.InssDto;
+namespace CalculoImposto.API.MapeamentoDto.InssDt;
 
-public static class INSSMapeamentoDto
+public static class InssMapeamentoDto
 {
-    public static IEnumerable<INSSDto> ConverterInssParaDtos(this IEnumerable<INSSModel> inss)
+    public static IEnumerable<InssDto> ConverterInssParaDtos(this IEnumerable<InssModel> inss)
     {
         return (from ins in inss
-                select new INSSDto
+                select new InssDto
                 {
                     Id = ins.Id,
                     Competencia = ins.Competencia,
@@ -18,10 +18,10 @@ public static class INSSMapeamentoDto
 
                 }).ToList();
     }
-    public static IEnumerable<INSSModel> ConverterDtosParaInss(this IEnumerable<INSSDto> inss)
+    public static IEnumerable<InssModel> ConverterDtosParaInss(this IEnumerable<InssDto> inss)
     {
         return (from ins in inss
-                select new INSSModel
+                select new InssModel
                 {
                     Id = ins.Id,
                     Competencia = ins.Competencia,
@@ -31,9 +31,9 @@ public static class INSSMapeamentoDto
 
                 }).ToList();
     }
-    public static INSSModel ConverteDtoParaInss(this INSSDto inss)
+    public static InssModel ConverteDtoParaInss(this InssDto inss)
     {
-        return new INSSModel
+        return new InssModel
         {
             Id = inss.Id,
             Competencia = inss.Competencia,
@@ -42,9 +42,9 @@ public static class INSSMapeamentoDto
             Valor = inss.Valor
         };
     }
-    public static INSSDto ConverteInssParaDto(this INSSModel inss)
+    public static InssDto ConverteInssParaDto(this InssModel inss)
     {
-        return new INSSDto
+        return new InssDto
         {
             Id = inss.Id,
             Competencia = inss.Competencia,

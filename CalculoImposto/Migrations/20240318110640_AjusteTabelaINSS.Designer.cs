@@ -25,7 +25,7 @@ namespace CalculoImposto.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CalculoImposto.API.Model.INSS.INSSModel", b =>
+            modelBuilder.Entity("CalculoImposto.API.Model.INSS.InssModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,7 +88,7 @@ namespace CalculoImposto.API.Migrations
                     b.ToTable("DescontoMinimos");
                 });
 
-            modelBuilder.Entity("CalculoImposto.API.Model.IRRF.IRRFModel", b =>
+            modelBuilder.Entity("CalculoImposto.API.Model.IRRF.IrrfModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
