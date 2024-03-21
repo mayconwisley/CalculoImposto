@@ -29,11 +29,10 @@ public class CadastroInssTeste
             Valor = 1412m
         };
         _mockInssServico.Setup(x => x.CriarInss(It.IsAny<InssDto>())).Returns(Task.CompletedTask);
-
-        var inssDtoResult = await _inssController.Post(inssDto) ;
-
+        var inssDtoResult = await _inssController.Post(inssDto);
         Assert.IsInstanceOfType(inssDtoResult, typeof(ActionResult<InssDto>));
     }
+
     [TestMethod]
     public async Task Put_Inss_Ok()
     {
@@ -55,15 +54,6 @@ public class CadastroInssTeste
     [TestMethod]
     public async Task Delete_Inss_Ok()
     {
-        InssDto inssDto = new()
-        {
-            Id = 1,
-            Competencia = DateTime.Parse("01/01/2024"),
-            Faixa = 2,
-            Porcentagem = 9.5m,
-            Valor = 1512m
-        };
-
         var inssDtoResult = await _inssController.Delete(1);
         Assert.IsInstanceOfType(inssDtoResult, typeof(ActionResult<InssDto>));
     }
