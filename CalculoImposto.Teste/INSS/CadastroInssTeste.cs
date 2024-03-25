@@ -9,15 +9,13 @@ namespace CalculoImposto.Teste.INSS;
 [TestClass]
 public class CadastroInssTeste
 {
-    private InssController _inssController;
-    private Mock<IInssServico> _mockInssServico;
-
+    private readonly InssController _inssController;
+    private readonly Mock<IInssServico> _mockInssServico;
     public CadastroInssTeste()
     {
         _mockInssServico = new Mock<IInssServico>();
         _inssController = new InssController(_mockInssServico.Object);
     }
-
     [TestMethod]
     public async Task Post_Inss_Created()
     {
@@ -32,7 +30,6 @@ public class CadastroInssTeste
         var inssDtoResult = await _inssController.Post(inssDto);
         Assert.IsInstanceOfType(inssDtoResult, typeof(ActionResult<InssDto>));
     }
-
     [TestMethod]
     public async Task Put_Inss_Ok()
     {
@@ -50,7 +47,6 @@ public class CadastroInssTeste
 
         Assert.IsInstanceOfType(inssDtoResult, typeof(ActionResult<InssDto>));
     }
-
     [TestMethod]
     public async Task Delete_Inss_Ok()
     {

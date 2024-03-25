@@ -10,8 +10,8 @@ namespace CalculoImposto.Teste.Calculos;
 [TestClass]
 public class CalculosTeste
 {
-    private CalculosController _calculosController;
-    private Mock<ICalculoImpostoServico> _mockCalculoImposto;
+    private readonly CalculosController _calculosController;
+    private readonly Mock<ICalculoImpostoServico> _mockCalculoImposto;
 
     public CalculosTeste()
     {
@@ -31,7 +31,6 @@ public class CalculosTeste
         var result = await _calculosController.CalculoInssProgressivo(strCompetencia, baseInss);
         Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
     }
-
     [TestMethod]
     public async Task CalculoIrrfProgressivo()
     {
@@ -66,7 +65,6 @@ public class CalculosTeste
         var result = await _calculosController.CalculoIrrfNormal(strCompetencia, valorIrrf, baseInss, qtDependente);
         Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult));
     }
-
     [TestMethod]
     public async Task CalculoIrrfSimplificado()
     {
