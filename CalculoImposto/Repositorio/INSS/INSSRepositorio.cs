@@ -144,7 +144,7 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
             var faixaInss = await _calculoImpostoContext.INSS
                                     .Where(w => w.Valor >= baseInss &&
                                             w.Competencia == _calculoImpostoContext.INSS
-                                                            .Where(w => w.Competencia == competencia)
+                                                            .Where(w => w.Competencia <= competencia)
                                                             .Max(m => m.Competencia))
                                      .MinAsync(m => m.Faixa);
             return faixaInss;
