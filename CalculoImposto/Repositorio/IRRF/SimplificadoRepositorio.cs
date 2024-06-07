@@ -121,7 +121,9 @@ public class SimplificadoRepositorio(CalculoImpostoContext calculoImpostoContext
     public async Task<decimal> ValorSimplificadoCompetencia(DateTime competencia)
     {
         var valorSimplificado = await _calculoImpostoContext.Simplificados
-            .Where(w => w.Competencia == competencia)
+            .Where(w => w.Competencia == _calculoImpostoContext.Simplificados
+                                         .Where(w => w.Competencia <= competencia)
+                                         .Max(m => m.Competencia))
             .MaxAsync(m => m.Valor);
         return valorSimplificado;
     }

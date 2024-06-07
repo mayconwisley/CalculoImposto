@@ -136,7 +136,9 @@ public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) 
     public async Task<decimal> ValorDependenteCompetencia(DateTime competencia)
     {
         var valorDependente = await _calculoImpostoContext.Dependentes
-            .Where(w => w.Competencia == competencia)
+            .Where(w => w.Competencia == _calculoImpostoContext.Dependentes
+                                         .Where(w => w.Competencia <= competencia)
+                                         .Max(m => m.Competencia))
             .MaxAsync(w => w.Valor);
         return valorDependente;
     }
