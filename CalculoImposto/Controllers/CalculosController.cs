@@ -1,6 +1,7 @@
 ﻿using CalculoImposto.API.Servico.Calculo.Interface;
 using CalculoImposto.Modelo.DTO.INSS;
 using CalculoImposto.Modelo.DTO.IRRF;
+using CalculoImposto.Modelo.DTO.Pensao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalculoImposto.API.Controllers;
@@ -62,5 +63,18 @@ public class CalculosController(ICalculoImpostoServico calculoImposto) : Control
         }
 
         return Ok(calculoIrrf);
+    }
+    [HttpGet("Pensao/{strCompetencia}/{porcentagemPensao:decimal}/{valorBruto:decimal}/{baseInss:decimal}/{outrosDescontos:decimal}/{qtdDependente:int}/{simplificado:bool}")]
+    public async Task<ActionResult<CalculoPensaoDto>> CalculoPensao(string strCompetencia, decimal porcentagemPensao, decimal valorBruto, decimal baseInss, decimal outrosDescontos, int qtdDependente, bool simplificado)
+    {
+        DateTime competencia = DateTime.Parse(strCompetencia.Replace("%2F", "/"));
+        var calculoPensao = await _calculoImposto.CalculoPensao(competencia, porcentagemPensao, valorBruto, baseInss, outrosDescontos, qtdDependente, simplificado);
+
+        if (calculoPensao is null)
+        {
+            return NotFound("Sem dados");
+        }
+
+        return Ok(calculoPensao);
     }
 }
