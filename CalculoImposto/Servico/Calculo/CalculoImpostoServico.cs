@@ -198,7 +198,6 @@ public class CalculoImpostoServico(IIrrfServico iRRFServico,
         };
         return calculoSimplificado;
     }
-
     public async Task<CalculoPensaoDto> CalculoPensao(DateTime competencia, decimal porcentagemPensao, decimal valorBruto, decimal baseInss, decimal outrosDescontos, int qtdDependente, bool simplificado)
     {
         CalculoPensaoDto calculoPensao = new();

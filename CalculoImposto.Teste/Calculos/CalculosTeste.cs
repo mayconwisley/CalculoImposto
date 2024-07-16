@@ -16,7 +16,7 @@ public class CalculosTeste
     public CalculosTeste()
     {
         _mockCalculoImposto = new Mock<ICalculoImpostoServico>();
-        _calculosController = new CalculosController(_mockCalculoImposto.Object);
+        _calculosController = new CalculosController(_mockCalculoImposto.Object, null);
     }
 
     [TestMethod]

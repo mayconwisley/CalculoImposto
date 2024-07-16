@@ -35,6 +35,7 @@ builder.Services.AddScoped<IDescontoMinimoServico, DescontoMinimoServico>();
 builder.Services.AddScoped<ISimplificadoRepositorio, SimplificadoRepositorio>();
 builder.Services.AddScoped<ISimplificadoServico, SimplificadoServico>();
 builder.Services.AddScoped<ICalculoImpostoServico, CalculoImpostoServico>();
+builder.Services.AddScoped<ICalculoBaseEstabilidadeServico, CalculoBaseEstabilidadeServico>();
 
 var app = builder.Build();
 
