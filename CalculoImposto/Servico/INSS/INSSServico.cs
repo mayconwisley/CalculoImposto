@@ -8,6 +8,7 @@ namespace CalculoImposto.API.Servico.INSS;
 public class InssServico(IInssRepositorio iNSSRepositorio) : IInssServico
 {
     private readonly IInssRepositorio _INSSRepositorio = iNSSRepositorio;
+  
 
     public async Task AtualizarInss(InssDto inss)
     {

@@ -1,4 +1,7 @@
 using CalculoImposto.API.Banco;
+using CalculoImposto.API.Model.INSS;
+using CalculoImposto.API.Repositorio.CRUD;
+using CalculoImposto.API.Repositorio.CRUD.Interface;
 using CalculoImposto.API.Repositorio.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Repositorio.IRRF;
@@ -9,6 +12,8 @@ using CalculoImposto.API.Servico.INSS;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.API.Servico.IRRF;
 using CalculoImposto.API.Servico.IRRF.Interface;
+using CalculoImposto.Modelo.DTO.INSS;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +29,8 @@ var passDatabase = Environment.GetEnvironmentVariable("SQLSenha", EnvironmentVar
 string strDatabase = builder.Configuration.GetConnectionString("CalculoImposto")!.Replace("{{pass}}", passDatabase);
 builder.Services.AddDbContext<CalculoImpostoContext>(cd => cd.UseSqlServer(strDatabase));
 
+builder.Services.AddScoped(typeof(ICrudBase<>), typeof(CrudBase<>));
+
 builder.Services.AddScoped<IInssRepositorio, InssRepositorio>();
 builder.Services.AddScoped<IInssServico, InssServico>();
 builder.Services.AddScoped<IIrrfRepositorio, IrrfRepositorio>();
@@ -36,6 +43,8 @@ builder.Services.AddScoped<ISimplificadoRepositorio, SimplificadoRepositorio>();
 builder.Services.AddScoped<ISimplificadoServico, SimplificadoServico>();
 builder.Services.AddScoped<ICalculoImpostoServico, CalculoImpostoServico>();
 builder.Services.AddScoped<ICalculoBaseEstabilidadeServico, CalculoBaseEstabilidadeServico>();
+
+
 
 var app = builder.Build();
 

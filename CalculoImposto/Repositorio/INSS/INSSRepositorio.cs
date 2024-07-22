@@ -1,13 +1,16 @@
 ﻿using CalculoImposto.API.Banco;
 using CalculoImposto.API.Model.INSS;
+using CalculoImposto.API.Repositorio.CRUD.Interface;
 using CalculoImposto.API.Repositorio.INSS.Interface;
+using CalculoImposto.Modelo.DTO.INSS;
 using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.INSS;
 
-public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IInssRepositorio
+public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudBase<InssModel> crud) : IInssRepositorio
 {
     private readonly CalculoImpostoContext _calculoImpostoContext = calculoImpostoContext;
+    private readonly ICrudBase<InssModel> _crud = crud;
 
     public async Task<InssModel> AtualizarInss(InssModel inss)
     {
@@ -15,8 +18,7 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
         {
             if (inss is not null)
             {
-                _calculoImpostoContext.INSS.Entry(inss).State = EntityState.Modified;
-                await _calculoImpostoContext.SaveChangesAsync();
+                await _crud.Atualizar(inss);
                 return inss;
             }
             return new();
@@ -33,8 +35,7 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
         {
             if (inss is not null)
             {
-                _calculoImpostoContext.INSS.Add(inss);
-                await _calculoImpostoContext.SaveChangesAsync();
+                await _crud.Criar(inss);
                 return inss;
             }
             return new();
@@ -52,8 +53,7 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
             var inss = await PegarPorIdInss(id);
             if (inss is not null)
             {
-                _calculoImpostoContext.INSS.Remove(inss);
-                await _calculoImpostoContext.SaveChangesAsync();
+                await _crud.Deletar(inss.Id);
                 return inss;
             }
             return new();
@@ -89,15 +89,7 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
     {
         try
         {
-            var inss = await _calculoImpostoContext.INSS
-                .Where(w => w.Id == id)
-                .FirstOrDefaultAsync();
-
-            if (inss is not null)
-            {
-                return inss;
-            }
-            return new();
+            return await _crud.PegarPorId(id);
         }
         catch (Exception)
         {
@@ -110,12 +102,7 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
     {
         try
         {
-            var inssList = await _calculoImpostoContext.INSS
-                .Skip((pagina - 1) * tamanho)
-                .Take(tamanho)
-                .OrderByDescending(o => o.Competencia)
-                .ToListAsync();
-            return inssList;
+            return await _crud.PegarTodos(pagina, tamanho, busca);
         }
         catch (Exception)
         {
@@ -224,4 +211,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext) : IIns
             throw;
         }
     }
+
+
 }
