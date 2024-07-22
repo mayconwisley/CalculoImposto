@@ -1,8 +1,7 @@
 ﻿using CalculoImposto.API.Banco;
+using CalculoImposto.API.CRUD.Interface;
 using CalculoImposto.API.Model.INSS;
-using CalculoImposto.API.Repositorio.CRUD.Interface;
 using CalculoImposto.API.Repositorio.INSS.Interface;
-using CalculoImposto.Modelo.DTO.INSS;
 using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.INSS;

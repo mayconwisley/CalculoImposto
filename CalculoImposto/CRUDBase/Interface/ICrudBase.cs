@@ -1,4 +1,4 @@
-﻿namespace CalculoImposto.API.Repositorio.CRUD.Interface;
+﻿namespace CalculoImposto.API.CRUD.Interface;
 
 public interface ICrudBase<T>
 {

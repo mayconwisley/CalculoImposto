@@ -1,7 +1,7 @@
 using CalculoImposto.API.Banco;
+using CalculoImposto.API.CRUD;
+using CalculoImposto.API.CRUD.Interface;
 using CalculoImposto.API.Model.INSS;
-using CalculoImposto.API.Repositorio.CRUD;
-using CalculoImposto.API.Repositorio.CRUD.Interface;
 using CalculoImposto.API.Repositorio.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Repositorio.IRRF;
