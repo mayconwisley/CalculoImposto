@@ -11,9 +11,9 @@ public class IrrfController(IIrrfServico irrfServico) : ControllerBase
     private readonly IIrrfServico _irrfServico = irrfServico;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<IrrfDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
+    public async Task<ActionResult<IEnumerable<IrrfDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
     {
-        var irrfList = await _irrfServico.PegarTodosIrrf(pagina, tamanho, busca);
+        var irrfList = await _irrfServico.PegarTodos(pagina, tamanho);
         decimal totalIrrf = await _irrfServico.TotalIrrf();
         decimal totalPagina = (totalIrrf / tamanho) <= 0 ? 1 : Math.Ceiling(totalIrrf / tamanho);
 
@@ -39,7 +39,7 @@ public class IrrfController(IIrrfServico irrfServico) : ControllerBase
     [HttpGet("{id:int}", Name = "BuscarIrrf")]
     public async Task<ActionResult<IrrfDto>> PegarPorId(int id)
     {
-        var irrf = await _irrfServico.PegarPorIdIrrf(id);
+        var irrf = await _irrfServico.PegarPorId(id);
 
         if (irrf.Id <= 0)
         {
@@ -74,7 +74,7 @@ public class IrrfController(IIrrfServico irrfServico) : ControllerBase
         {
             try
             {
-                await _irrfServico.CriarIrrf(irrf);
+                await _irrfServico.Criar(irrf);
                 return new CreatedAtRouteResult("BuscarIrrf", new { id = irrf.Id }, irrf);
             }
             catch (Exception)
@@ -96,13 +96,13 @@ public class IrrfController(IIrrfServico irrfServico) : ControllerBase
             return BadRequest("Dados Inválidos");
         }
 
-        await _irrfServico.AtualizarIrrf(irrf);
+        await _irrfServico.Atualizar(irrf);
         return Ok(irrf);
     }
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<IrrfDto>> Delete(int id)
     {
-        var irrf = await _irrfServico.PegarPorIdIrrf(id);
+        var irrf = await _irrfServico.PegarPorId(id);
         if (irrf is null)
         {
             return NotFound("Sem dados");
@@ -112,7 +112,7 @@ public class IrrfController(IIrrfServico irrfServico) : ControllerBase
             return NotFound("Sem dados");
         }
 
-        await _irrfServico.DeletarIrrf(id);
+        await _irrfServico.Deletar(id);
         return Ok(irrf);
     }
 }

@@ -8,49 +8,51 @@ namespace CalculoImposto.API.Servico.IRRF;
 public class IrrfServico(IIrrfRepositorio iRRFRepositorio) : IIrrfServico
 {
     public readonly IIrrfRepositorio _IRRFRepositorio = iRRFRepositorio;
-    public async Task AtualizarIrrf(IrrfDto irrf)
+
+    public async Task<IrrfDto> Atualizar(IrrfDto entity)
     {
-        await _IRRFRepositorio.AtualizarIrrf(irrf.ConverteDtoParaIrrf());
+        var irrfDto = await _IRRFRepositorio.Atualizar(entity.ConverteDtoParaIrrf());
+        return irrfDto.ConverteIrrfParaDto();
     }
-    public async Task CriarIrrf(IrrfDto irrf)
+    public async Task<IrrfDto> Criar(IrrfDto entity)
     {
-        await _IRRFRepositorio.CriarIrrf(irrf.ConverteDtoParaIrrf());
+        var irrfDto = await _IRRFRepositorio.Criar(entity.ConverteDtoParaIrrf());
+        return irrfDto.ConverteIrrfParaDto();
     }
     public async Task<decimal> DeducaoFaixaCompetenciaIrrf(DateTime competencia, int faixa)
     {
         var deducao = await _IRRFRepositorio.DeducaoFaixaCompetenciaIrrf(competencia, faixa);
         return deducao;
     }
-    public async Task DeletarIrrf(int id)
+    public async Task<IrrfDto> Deletar(int id)
     {
-        var irrf = await _IRRFRepositorio.PegarPorIdIrrf(id);
+        var irrfDto = await _IRRFRepositorio.PegarPorId(id);
 
-        if (irrf is not null)
+        if (irrfDto is not null)
         {
-            await _IRRFRepositorio.DeletarIrrf(irrf.Id);
+            await _IRRFRepositorio.Deletar(irrfDto.Id);
+            return irrfDto.ConverteIrrfParaDto();
         }
-
+        return new();
     }
     public async Task<int> PegarFaixaIrrf(DateTime competencia, decimal valorBrutoIrrf)
     {
         var faixa = await _IRRFRepositorio.PegarFaixaIrrf(competencia, valorBrutoIrrf);
         return faixa;
     }
-
     public async Task<IEnumerable<IrrfDto>> PegarPorCompetenciaIrrf(DateTime competencia)
     {
         var irrfList = await _IRRFRepositorio.PegarPorCompetenciaIrrf(competencia);
         return irrfList.ConverterIrrfParaDtos();
     }
-
-    public async Task<IrrfDto> PegarPorIdIrrf(int id)
+    public async Task<IrrfDto> PegarPorId(int id)
     {
-        var irrf = await _IRRFRepositorio.PegarPorIdIrrf(id);
-        return irrf.ConverteIrrfParaDto();
+        var irrfDto = await _IRRFRepositorio.PegarPorId(id);
+        return irrfDto.ConverteIrrfParaDto();
     }
-    public async Task<IEnumerable<IrrfDto>> PegarTodosIrrf(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<IrrfDto>> PegarTodos(int pagina, int tamanho)
     {
-        var irrfList = await _IRRFRepositorio.PegarTodosIrrf(pagina, tamanho, busca);
+        var irrfList = await _IRRFRepositorio.PegarTodos(pagina, tamanho);
         return irrfList.ConverterIrrfParaDtos();
     }
     public async Task<decimal> PorcentagemFaixaCompetenciaIrrf(DateTime competencia, int faixa)

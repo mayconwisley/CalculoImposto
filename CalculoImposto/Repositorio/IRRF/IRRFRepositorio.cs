@@ -1,47 +1,51 @@
 ﻿using CalculoImposto.API.Banco;
+using CalculoImposto.API.CRUD;
 using CalculoImposto.API.Model.IRRF;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.IRRF;
 
-public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrrfRepositorio
+public class IrrfRepositorio : CrudBase<IrrfModel>, IIrrfRepositorio
 {
-    private readonly CalculoImpostoContext _calculoImpostoContext = calculoImpostoContext;
+    private readonly CalculoImpostoContext _calculoImpostoContext;
 
-    public async Task<IrrfModel> AtualizarIrrf(IrrfModel irrf)
+    public IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : base(calculoImpostoContext)
+    {
+        _calculoImpostoContext = calculoImpostoContext;
+    }
+
+    public new async Task<IrrfModel> Atualizar(IrrfModel entity)
     {
         try
         {
-            if (irrf is not null)
+            if (entity is not null)
             {
-                _calculoImpostoContext.IRRF.Entry(irrf).State = EntityState.Modified;
+                _calculoImpostoContext.IRRF.Entry(entity).State = EntityState.Modified;
                 await _calculoImpostoContext.SaveChangesAsync();
-                return irrf;
+                return entity;
             }
             return new();
         }
         catch (Exception)
         {
-
             throw;
         }
     }
-    public async Task<IrrfModel> CriarIrrf(IrrfModel irrf)
+    public new async Task<IrrfModel> Criar(IrrfModel entity)
     {
         try
         {
-            if (irrf is not null)
+            if (entity is not null)
             {
-                _calculoImpostoContext.IRRF.Add(irrf);
+                 _calculoImpostoContext.IRRF.Add(entity);
                 await _calculoImpostoContext.SaveChangesAsync();
-                return irrf;
+                return entity;
             }
             return new();
         }
         catch (Exception)
         {
-
             throw;
         }
     }
@@ -57,11 +61,11 @@ public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrr
         return deducao;
 
     }
-    public async Task<IrrfModel> DeletarIrrf(int id)
+    public new async Task<IrrfModel> Deletar(int id)
     {
         try
         {
-            var irrf = await PegarPorIdIrrf(id);
+            var irrf = await PegarPorId(id);
             if (irrf is not null)
             {
                 _calculoImpostoContext.IRRF.Remove(irrf);
@@ -72,7 +76,6 @@ public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrr
         }
         catch (Exception)
         {
-
             throw;
         }
     }
@@ -89,13 +92,11 @@ public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrr
 
             return faixa;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-
             throw;
         }
     }
-
     public async Task<IEnumerable<IrrfModel>> PegarPorCompetenciaIrrf(DateTime competencia)
     {
         try
@@ -112,12 +113,10 @@ public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrr
         }
         catch (Exception)
         {
-
             throw;
         }
     }
-
-    public async Task<IrrfModel> PegarPorIdIrrf(int id)
+    public new async Task<IrrfModel> PegarPorId(int id)
     {
         try
         {
@@ -133,11 +132,10 @@ public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrr
         }
         catch (Exception)
         {
-
             throw;
         }
     }
-    public async Task<IEnumerable<IrrfModel>> PegarTodosIrrf(int pagina, int tamanho, string busca)
+    public new async Task<IEnumerable<IrrfModel>> PegarTodos(int pagina, int tamanho)
     {
         try
         {
@@ -151,7 +149,6 @@ public class IrrfRepositorio(CalculoImpostoContext calculoImpostoContext) : IIrr
         }
         catch (Exception)
         {
-
             throw;
         }
     }

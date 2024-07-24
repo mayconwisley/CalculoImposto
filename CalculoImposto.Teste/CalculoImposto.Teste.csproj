@@ -29,4 +29,9 @@
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Calculos\" />
+    <Folder Include="INSS\" />
+  </ItemGroup>
+
 </Project>

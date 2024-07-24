@@ -9,23 +9,28 @@ public class DependenteServico(IDependenteRepositorio dependenteRepositorio) : I
 {
     private readonly IDependenteRepositorio _dependenteRepositorio = dependenteRepositorio;
 
-    public async Task AtualizarDependente(DependenteDto dependente)
+    public async Task<DependenteDto> Atualizar(DependenteDto dependente)
     {
-        await _dependenteRepositorio.AtualizarDependente(dependente.ConverterDtoParaDependente());
+        var dependenteDto = await _dependenteRepositorio.Atualizar(dependente.ConverterDtoParaDependente());
+        return dependenteDto.ConverterDependenteParaDto();
     }
 
-    public async Task CriarDependente(DependenteDto dependente)
+    public async Task<DependenteDto> Criar(DependenteDto dependente)
     {
-        await _dependenteRepositorio.CriarDependente(dependente.ConverterDtoParaDependente());
+        var dependenteDto = await _dependenteRepositorio.Criar(dependente.ConverterDtoParaDependente());
+        return dependenteDto.ConverterDependenteParaDto();
+
     }
 
-    public async Task DeletarDependente(int id)
+    public async Task<DependenteDto> Deletar(int id)
     {
-        var dependente = await _dependenteRepositorio.PegarPorIdDependente(id);
+        var dependente = await _dependenteRepositorio.PegarPorId(id);
         if (dependente is not null)
         {
-            await _dependenteRepositorio.DeletarDependente(dependente.Id);
+            var dependenteDto = await _dependenteRepositorio.Deletar(dependente.Id);
+            return dependenteDto.ConverterDependenteParaDto();
         }
+        return new();
     }
 
     public async Task<DependenteDto> PegarPorCompetenciaDependente(DateTime competencia)
@@ -34,15 +39,15 @@ public class DependenteServico(IDependenteRepositorio dependenteRepositorio) : I
         return dependente.ConverterDependenteParaDto();
     }
 
-    public async Task<DependenteDto> PegarPorIdDependente(int id)
+    public async Task<DependenteDto> PegarPorId(int id)
     {
-        var dependente = await _dependenteRepositorio.PegarPorIdDependente(id);
+        var dependente = await _dependenteRepositorio.PegarPorId(id);
         return dependente.ConverterDependenteParaDto();
     }
 
-    public async Task<IEnumerable<DependenteDto>> PegarTodosDependente(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<DependenteDto>> PegarTodos(int pagina, int tamanho)
     {
-        var dependenteList = await _dependenteRepositorio.PegarTodosDependente(pagina, tamanho, busca);
+        var dependenteList = await _dependenteRepositorio.PegarTodos(pagina, tamanho);
         return dependenteList.ConverterDependentesParaDtos();
     }
 
@@ -57,4 +62,6 @@ public class DependenteServico(IDependenteRepositorio dependenteRepositorio) : I
         var valorDependente = await _dependenteRepositorio.ValorDependenteCompetencia(competencia);
         return valorDependente;
     }
+
+
 }

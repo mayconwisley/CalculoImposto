@@ -11,10 +11,10 @@ public class InssController(IInssServico inssServico) : ControllerBase
     private readonly IInssServico _inssServico = inssServico;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<InssDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
+    public async Task<ActionResult<IEnumerable<InssDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
     {
-        var inssList = await _inssServico.PegarTodosInss(pagina, tamanho, busca);
-        decimal totalInss = await _inssServico.TotalInss(busca);
+        var inssList = await _inssServico.PegarTodos(pagina, tamanho);
+        decimal totalInss = await _inssServico.TotalInss("");
         decimal totalPagina = (totalInss / tamanho) <= 0 ? 1 : Math.Ceiling(totalInss / tamanho);
 
         if (tamanho == 1)
@@ -52,7 +52,7 @@ public class InssController(IInssServico inssServico) : ControllerBase
     [HttpGet("{id:int}", Name = "BuscarInss")]
     public async Task<ActionResult<InssDto>> PegarPorId(int id)
     {
-        var inss = await _inssServico.PegarPorIdInss(id);
+        var inss = await _inssServico.PegarPorId(id);
 
         if (inss.Id <= 0)
         {
@@ -73,7 +73,7 @@ public class InssController(IInssServico inssServico) : ControllerBase
         {
             try
             {
-                await _inssServico.CriarInss(inss);
+                await _inssServico.Criar(inss);
                 return new CreatedAtRouteResult("BuscarInss", new { id = inss.Id }, inss);
             }
             catch (Exception)
@@ -95,13 +95,13 @@ public class InssController(IInssServico inssServico) : ControllerBase
             return BadRequest("Dados Inválidos");
         }
 
-        await _inssServico.AtualizarInss(inss);
+        await _inssServico.Atualizar(inss);
         return Ok(inss);
     }
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<InssDto>> Delete(int id)
     {
-        var inss = await _inssServico.PegarPorIdInss(id);
+        var inss = await _inssServico.PegarPorId(id);
         if (inss is null)
         {
             return NotFound("Sem dados");
@@ -111,7 +111,7 @@ public class InssController(IInssServico inssServico) : ControllerBase
             return NotFound("Sem dados");
         }
 
-        await _inssServico.DeletarInss(id);
+        await _inssServico.Deletar(id);
         return Ok(inss);
     }
 }

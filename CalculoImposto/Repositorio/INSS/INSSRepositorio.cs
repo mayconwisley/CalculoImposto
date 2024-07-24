@@ -1,66 +1,18 @@
 ﻿using CalculoImposto.API.Banco;
-using CalculoImposto.API.CRUD.Interface;
+using CalculoImposto.API.CRUD;
 using CalculoImposto.API.Model.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.INSS;
 
-public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudBase<InssModel> crud) : IInssRepositorio
+public class InssRepositorio : CrudBase<InssModel>, IInssRepositorio
 {
-    private readonly CalculoImpostoContext _calculoImpostoContext = calculoImpostoContext;
-    private readonly ICrudBase<InssModel> _crud = crud;
+    private readonly CalculoImpostoContext _calculoImpostoContext;
 
-    public async Task<InssModel> AtualizarInss(InssModel inss)
+    public InssRepositorio(CalculoImpostoContext calculoImpostoContext) : base(calculoImpostoContext)
     {
-        try
-        {
-            if (inss is not null)
-            {
-                await _crud.Atualizar(inss);
-                return inss;
-            }
-            return new();
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-    }
-
-    public async Task<InssModel> CriarInss(InssModel inss)
-    {
-        try
-        {
-            if (inss is not null)
-            {
-                await _crud.Criar(inss);
-                return inss;
-            }
-            return new();
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-    }
-
-    public async Task<InssModel> DeletarInss(int id)
-    {
-        try
-        {
-            var inss = await PegarPorIdInss(id);
-            if (inss is not null)
-            {
-                await _crud.Deletar(inss.Id);
-                return inss;
-            }
-            return new();
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        _calculoImpostoContext = calculoImpostoContext;
     }
 
     public async Task<IEnumerable<InssModel>> PegarTodosPorCompetenciaInss(DateTime competencia)
@@ -83,32 +35,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             throw;
         }
     }
-
-    public async Task<InssModel> PegarPorIdInss(int id)
-    {
-        try
-        {
-            return await _crud.PegarPorId(id);
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
-    }
-
-    public async Task<IEnumerable<InssModel>> PegarTodosInss(int pagina, int tamanho, string busca)
-    {
-        try
-        {
-            return await _crud.PegarTodos(pagina, tamanho, busca);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-    }
-
     public async Task<int> TotalInss(string busca)
     {
         if (string.IsNullOrEmpty(busca))
@@ -122,7 +48,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             .CountAsync();
         return totalInss;
     }
-
     public async Task<int> PegarFaixaInss(DateTime competencia, decimal baseInss)
     {
         try
@@ -140,7 +65,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             throw;
         }
     }
-
     public async Task<int> UltimaFaixaCompetenciaInss(DateTime competencia)
     {
         try
@@ -155,7 +79,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             throw;
         }
     }
-
     public async Task<decimal> PorcentagemFaixaCompetenciaInss(DateTime competencia, int faixa)
     {
         try
@@ -174,7 +97,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             throw;
         }
     }
-
     public async Task<decimal> ValorFaixaCompetenciaInss(DateTime competencia, int faixa)
     {
         try
@@ -193,7 +115,6 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             throw;
         }
     }
-
     public async Task<decimal> ValorTetoCompetenciaInss(DateTime competencia)
     {
         try
@@ -210,6 +131,93 @@ public class InssRepositorio(CalculoImpostoContext calculoImpostoContext, ICrudB
             throw;
         }
     }
+    public new async Task<IEnumerable<InssModel>> PegarTodos(int pagina, int tamanho)
+    {
+        try
+        {
+            var inssList = await _calculoImpostoContext.INSS
+                .Skip((pagina - 1) * tamanho)
+                .Take(tamanho)
+                .OrderByDescending(w => w.Competencia)
+                .ToListAsync();
 
+            return inssList;
+        }
+        catch (Exception)
+        {
 
+            throw;
+        }
+    }
+    public new async Task<InssModel> PegarPorId(int id)
+    {
+        try
+        {
+            var inss = await _calculoImpostoContext.INSS
+                .Where(w => w.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (inss is not null)
+            {
+                return inss;
+            }
+            return new();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    public new async Task<InssModel> Criar(InssModel entity)
+    {
+        try
+        {
+            if (entity is not null)
+            {
+                _calculoImpostoContext.INSS.Add(entity);
+                await _calculoImpostoContext.SaveChangesAsync();
+                return entity;
+            }
+            return new();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    public new async Task<InssModel> Atualizar(InssModel entity)
+    {
+        try
+        {
+            if (entity is not null)
+            {
+                _calculoImpostoContext.INSS.Entry(entity).State = EntityState.Modified;
+                await _calculoImpostoContext.SaveChangesAsync();
+                return entity;
+            }
+            return new();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    public new async Task<InssModel> Deletar(int id)
+    {
+        try
+        {
+            var inss = await PegarPorId(id);
+            if (inss is not null)
+            {
+                _calculoImpostoContext.INSS.Remove(inss);
+                await _calculoImpostoContext.SaveChangesAsync();
+                return inss;
+            }
+            return new();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }

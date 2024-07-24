@@ -21,7 +21,6 @@ public class CrudBase<T> : ICrudBase<T> where T : class
         await _calculoImpostoContext.SaveChangesAsync();
         return entity;
     }
-
     public async Task<T> Criar(T entity)
     {
         await _dbSet.AddAsync(entity);
@@ -29,7 +28,6 @@ public class CrudBase<T> : ICrudBase<T> where T : class
         await _calculoImpostoContext.SaveChangesAsync();
         return entity;
     }
-
     public async Task<T> Deletar(int id)
     {
         var entity = await _dbSet.FindAsync(id);
@@ -39,26 +37,25 @@ public class CrudBase<T> : ICrudBase<T> where T : class
             await _calculoImpostoContext.SaveChangesAsync();
             return entity;
         }
-        return entity;
+        return null;
     }
-
     public async Task<T> PegarPorId(int id)
     {
         var entity = await _dbSet.FindAsync(id);
-        return entity;
+        if (entity != null)
+        {
+            return entity;
+        }
+        return null;
     }
-
-    public async Task<IEnumerable<T>> PegarTodos(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<T>> PegarTodos(int pagina, int tamanho)
     {
-        try
-        {
-            var inssList = await _dbSet.ToListAsync();
+        var entityList = await _dbSet.ToListAsync();
+        entityList = entityList
+                    .Skip((pagina - 1) * tamanho)
+                    .Take(tamanho)
+                    .ToList();
 
-            return inssList;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        return entityList;
     }
 }

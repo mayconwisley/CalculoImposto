@@ -1,15 +1,22 @@
 ﻿using CalculoImposto.API.Banco;
+using CalculoImposto.API.CRUD;
 using CalculoImposto.API.Model.IRRF;
 using CalculoImposto.API.Repositorio.IRRF.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.API.Repositorio.IRRF;
 
-public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) : IDependenteRepositorio
+public class DependenteRepositorio : CrudBase<DependenteModel>, IDependenteRepositorio
 {
-    private readonly CalculoImpostoContext _calculoImpostoContext = calculoImpostoContext;
+    private readonly CalculoImpostoContext _calculoImpostoContext;
 
-    public async Task<DependenteModel> AtualizarDependente(DependenteModel dependente)
+    public DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) : base(calculoImpostoContext)
+    {
+        _calculoImpostoContext = calculoImpostoContext;
+    }
+
+
+    public new async Task<DependenteModel> Atualizar(DependenteModel dependente)
     {
         try
         {
@@ -27,7 +34,7 @@ public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) 
             throw;
         }
     }
-    public async Task<DependenteModel> CriarDependente(DependenteModel dependente)
+    public new async Task<DependenteModel> Criar(DependenteModel dependente)
     {
         try
         {
@@ -45,11 +52,11 @@ public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) 
             throw;
         }
     }
-    public async Task<DependenteModel> DeletarDependente(int id)
+    public new async Task<DependenteModel> Deletar(int id)
     {
         try
         {
-            var dependente = await PegarPorIdDependente(id);
+            var dependente = await PegarPorId(id);
             if (dependente is not null)
             {
                 _calculoImpostoContext.Dependentes.Remove(dependente);
@@ -86,7 +93,7 @@ public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) 
         }
     }
 
-    public async Task<DependenteModel> PegarPorIdDependente(int id)
+    public new async Task<DependenteModel> PegarPorId(int id)
     {
         try
         {
@@ -107,7 +114,7 @@ public class DependenteRepositorio(CalculoImpostoContext calculoImpostoContext) 
         }
     }
 
-    public async Task<IEnumerable<DependenteModel>> PegarTodosDependente(int pagina, int tamanho, string busca)
+    public new async Task<IEnumerable<DependenteModel>> PegarTodos(int pagina, int tamanho)
     {
         try
         {

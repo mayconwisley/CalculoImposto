@@ -1,15 +1,11 @@
-﻿using CalculoImposto.API.Model.IRRF;
+﻿using CalculoImposto.API.CRUD.Interface;
+using CalculoImposto.API.Model.IRRF;
 
 namespace CalculoImposto.API.Repositorio.IRRF.Interface;
 
-public interface IDependenteRepositorio
+public interface IDependenteRepositorio : ICrudBase<DependenteModel>
 {
-    Task<IEnumerable<DependenteModel>> PegarTodosDependente(int pagina, int tamanho, string busca);
     Task<DependenteModel> PegarPorCompetenciaDependente(DateTime competencia);
-    Task<DependenteModel> PegarPorIdDependente(int id);
-    Task<DependenteModel> CriarDependente(DependenteModel dependente);
-    Task<DependenteModel> AtualizarDependente(DependenteModel dependente);
-    Task<DependenteModel> DeletarDependente(int id);
     Task<decimal> ValorDependenteCompetencia(DateTime competencia);
     Task<int> TotalDependente();
 }

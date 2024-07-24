@@ -11,9 +11,9 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
     private readonly IDependenteServico _dependente = dependente;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DependenteDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10, [FromQuery] string busca = "")
+    public async Task<ActionResult<IEnumerable<DependenteDto>>> PegarTodos([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
     {
-        var dependenteList = await _dependente.PegarTodosDependente(pagina, tamanho, busca);
+        var dependenteList = await _dependente.PegarTodos(pagina, tamanho);
         decimal totalDependente = await _dependente.TotalDependente();
         decimal totalPagina = (totalDependente / tamanho) <= 0 ? 1 : Math.Ceiling(totalDependente / tamanho);
 
@@ -39,7 +39,7 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
     [HttpGet("{id:int}", Name = "BuscarDependente")]
     public async Task<ActionResult<DependenteDto>> PegarPorId(int id)
     {
-        var dependente = await _dependente.PegarPorIdDependente(id);
+        var dependente = await _dependente.PegarPorId(id);
         if (dependente is not null)
         {
             return Ok(dependente);
@@ -72,7 +72,7 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
         {
             try
             {
-                await _dependente.CriarDependente(dependente);
+                await _dependente.Criar(dependente);
                 return new CreatedAtRouteResult("BuscarDependente", new { id = dependente.Id }, dependente);
             }
             catch (Exception)
@@ -100,7 +100,7 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
                     return BadRequest();
                 }
 
-                await _dependente.AtualizarDependente(dependente);
+                await _dependente.Atualizar(dependente);
                 return Ok(dependente);
             }
             catch (Exception)
@@ -116,7 +116,7 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
     {
         try
         {
-            var dependente = await _dependente.PegarPorIdDependente(id);
+            var dependente = await _dependente.PegarPorId(id);
             if (id != dependente.Id)
             {
                 return BadRequest();
@@ -126,7 +126,7 @@ public class DependenteController(IDependenteServico dependente) : ControllerBas
                 return BadRequest();
             }
 
-            await _dependente.DeletarDependente(dependente.Id);
+            await _dependente.Deletar(dependente.Id);
             return Ok(dependente);
         }
         catch (Exception)

@@ -8,27 +8,28 @@ namespace CalculoImposto.API.Servico.INSS;
 public class InssServico(IInssRepositorio iNSSRepositorio) : IInssServico
 {
     private readonly IInssRepositorio _INSSRepositorio = iNSSRepositorio;
-  
 
-    public async Task AtualizarInss(InssDto inss)
+    public async Task<InssDto> Atualizar(InssDto entity)
     {
-        await _INSSRepositorio.AtualizarInss(inss.ConverteDtoParaInss());
+        var inssDto = await _INSSRepositorio.Atualizar(entity.ConverteDtoParaInss());
+        return inssDto.ConverteInssParaDto();
     }
-
-    public async Task CriarInss(InssDto inss)
+    public async Task<InssDto> Criar(InssDto entity)
     {
-        await _INSSRepositorio.CriarInss(inss.ConverteDtoParaInss());
+        var inssDto = await _INSSRepositorio.Criar(entity.ConverteDtoParaInss());
+        return inssDto.ConverteInssParaDto();
     }
-
-    public async Task DeletarInss(int id)
+    public async Task<InssDto> Deletar(int id)
     {
-        var inss = await PegarPorIdInss(id);
-        if (inss is not null)
+        var inssDto = await _INSSRepositorio.PegarPorId(id);
+
+        if (inssDto is not null)
         {
-            await _INSSRepositorio.DeletarInss(inss.Id);
+            await _INSSRepositorio.Deletar(inssDto.Id);
+            return inssDto.ConverteInssParaDto();
         }
+        return new();
     }
-
     public async Task<decimal> DescontoInssProgressivo(DateTime competencia, decimal baseInss)
     {
         try
@@ -71,55 +72,46 @@ public class InssServico(IInssRepositorio iNSSRepositorio) : IInssServico
             throw;
         }
     }
-
     public async Task<int> PegarFaixaInss(DateTime competencia, decimal baseInss)
     {
         var faixaInss = await _INSSRepositorio.PegarFaixaInss(competencia, baseInss);
         return faixaInss;
     }
-
-    public async Task<InssDto> PegarPorIdInss(int id)
+    public async Task<InssDto> PegarPorId(int id)
     {
-        var inss = await _INSSRepositorio.PegarPorIdInss(id);
-        return inss.ConverteInssParaDto();
+        var inssDto = await _INSSRepositorio.PegarPorId(id);
+        return inssDto.ConverteInssParaDto();
     }
-
-    public async Task<IEnumerable<InssDto>> PegarTodosInss(int pagina, int tamanho, string busca)
+    public async Task<IEnumerable<InssDto>> PegarTodos(int pagina, int tamanho)
     {
-        var inssList = await _INSSRepositorio.PegarTodosInss(pagina, tamanho, busca);
-        return inssList.ConverterInssParaDtos();
+        var inssDtoList = await _INSSRepositorio.PegarTodos(pagina, tamanho);
+        return inssDtoList.ConverterInssParaDtos();
     }
-
     public async Task<IEnumerable<InssDto>> PegarTodosPorCompetenciaInss(DateTime competencia)
     {
         var inssList = await _INSSRepositorio.PegarTodosPorCompetenciaInss(competencia);
         return inssList.ConverterInssParaDtos();
     }
-
     public async Task<decimal> PorcentagemFaixaCompetenciaInss(DateTime competencia, int faixa)
     {
         var porcentagemInss = await _INSSRepositorio.PorcentagemFaixaCompetenciaInss(competencia, faixa);
         return porcentagemInss;
     }
-
     public async Task<int> TotalInss(string busca)
     {
         var totalInss = await _INSSRepositorio.TotalInss(busca);
         return totalInss;
     }
-
     public async Task<int> UltimaFaixaCompetenciaInss(DateTime competencia)
     {
         var ultimaCompetencia = await _INSSRepositorio.UltimaFaixaCompetenciaInss(competencia);
         return ultimaCompetencia;
     }
-
     public async Task<decimal> ValorFaixaCompetenciaInss(DateTime competencia, int faixa)
     {
         var valorFaixa = await _INSSRepositorio.ValorFaixaCompetenciaInss(competencia, faixa);
         return valorFaixa;
     }
-
     public async Task<decimal> ValorTetoCompetenciaInss(DateTime competencia)
     {
         var valorTeto = await _INSSRepositorio.ValorTetoCompetenciaInss(competencia);
