@@ -79,7 +79,6 @@ public class CalculosController(ICalculoImpostoServico calculoImposto, ICalculoB
 
         return Ok(calculoPensao);
     }
-
     [HttpGet("Estabilidade/{valorMedia:decimal}/{diasBase:int}/{diasEstabilidade:int}/{fgts8:bool}/{fgts40:bool}")]
     public async Task<ActionResult<CalculoEstabilidadeDto>> CalculoEstabilidade(decimal valorMedia = 0, int diasBase = 30, int diasEstabilidade = 0, bool fgts8 = true, bool fgts40 = true)
     {
