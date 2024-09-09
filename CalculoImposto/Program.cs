@@ -1,7 +1,6 @@
 using CalculoImposto.API.Banco;
 using CalculoImposto.API.CRUD;
 using CalculoImposto.API.CRUD.Interface;
-using CalculoImposto.API.Model.INSS;
 using CalculoImposto.API.Repositorio.INSS;
 using CalculoImposto.API.Repositorio.INSS.Interface;
 using CalculoImposto.API.Repositorio.IRRF;
@@ -12,8 +11,6 @@ using CalculoImposto.API.Servico.INSS;
 using CalculoImposto.API.Servico.INSS.Interface;
 using CalculoImposto.API.Servico.IRRF;
 using CalculoImposto.API.Servico.IRRF.Interface;
-using CalculoImposto.Modelo.DTO.INSS;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +46,11 @@ builder.Services.AddScoped<ICalculoBaseEstabilidadeServico, CalculoBaseEstabilid
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Calculo Imposto v1"));
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Calculo Imposto v1");
+    c.RoutePrefix = string.Empty;
+});
 app.UseAuthorization();
 
 app.MapControllers();
