@@ -4,6 +4,6 @@ namespace CalculoImposto.Domain.Entities;
 
 public class Inss : Entity
 {
-    public int Faixa { get; set; }
-    public decimal Porcentagem { get; set; }
+    public int Range { get; set; }
+    public decimal Percent { get; set; }
 }

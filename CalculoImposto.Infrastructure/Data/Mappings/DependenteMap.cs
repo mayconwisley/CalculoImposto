@@ -10,11 +10,13 @@ public class DependenteMap : IEntityTypeConfiguration<Dependente>
     {
         builder.ToTable("Dependente");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Competencia)
+        builder.Property(x => x.Competence)
             .HasColumnType("DATE")
             .IsRequired();
-        builder.Property(x => x.Valor)
+        builder.Property(x => x.Value)
             .HasColumnType("DECIMAL(18,2)")
             .IsRequired();
+
+        builder.HasData(new Dependente { Id = Guid.NewGuid(), Value = 189.59m, Competence = DateTime.Parse("01/01/2015") });
     }
 }

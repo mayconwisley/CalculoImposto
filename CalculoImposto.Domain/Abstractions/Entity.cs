@@ -3,6 +3,6 @@
 public abstract class Entity
 {
     public Guid Id { get; set; }
-    public DateTime Competencia { get; set; }
-    public decimal Valor { get; set; }
+    public DateTime Competence { get; set; }
+    public decimal Value { get; set; }
 }

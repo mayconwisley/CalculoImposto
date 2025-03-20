@@ -4,7 +4,7 @@ namespace CalculoImposto.Domain.Entities;
 
 public class Irrf : Entity
 {
-    public int Faixa { get; set; }
-    public decimal Porcentagem { get; set; }
-    public decimal Deducao { get; set; }
+    public int Range { get; set; }
+    public decimal Percent { get; set; }
+    public decimal Deduction { get; set; }
 }

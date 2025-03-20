@@ -10,11 +10,12 @@ public class DescontoMinimoMap : IEntityTypeConfiguration<DescontoMinimo>
     {
         builder.ToTable("DescontoMinimo");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Competencia)
+        builder.Property(x => x.Competence)
             .HasColumnType("DATE")
             .IsRequired();
-        builder.Property(x => x.Valor)
+        builder.Property(x => x.Value)
             .HasColumnType("DECIMAL(18,2)")
             .IsRequired();
+        builder.HasData(new DescontoMinimo { Id = Guid.NewGuid(), Value = 10m, Competence = DateTime.Parse("01/05/2023") });
     }
 }
