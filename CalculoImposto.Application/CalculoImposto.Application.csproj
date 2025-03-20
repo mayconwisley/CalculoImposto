@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="UseCases\Inss\ValueRoofCompetence\" />
     <Folder Include="UseCases\Inss\ValueRangeCompetence\" />
-    <Folder Include="UseCases\Inss\TotalRange\" />
   </ItemGroup>
 
   <ItemGroup>
