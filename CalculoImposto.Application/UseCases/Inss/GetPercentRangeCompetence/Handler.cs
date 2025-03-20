@@ -2,7 +2,7 @@
 using CalculoImposto.Domain.Respositories.Inss.Interface;
 using MediatR;
 
-namespace CalculoImposto.Application.UseCases.Inss.PercentRangeCompetence;
+namespace CalculoImposto.Application.UseCases.Inss.GetPercentRangeCompetence;
 
 public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<Command, Result<Response>>
 {

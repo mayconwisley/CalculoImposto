@@ -2,7 +2,7 @@
 using CalculoImposto.Domain.Respositories.Inss.Interface;
 using MediatR;
 
-namespace CalculoImposto.Application.UseCases.Inss.TotalRange;
+namespace CalculoImposto.Application.UseCases.Inss.GetTotalRange;
 
 public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<Command, Result<Response>>
 {
