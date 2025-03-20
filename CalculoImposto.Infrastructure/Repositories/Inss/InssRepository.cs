@@ -27,6 +27,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
     public async Task<IEnumerable<Domain.Entities.Inss>> GetAllAsync(int page = 0, int size = 25, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Inss
+                    .OrderBy(o => o.Competence)
                     .Skip((page - 1) * size)
                     .Take(size)
                     .ToListAsync(cancellationToken);
@@ -35,6 +36,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
     public async Task<IEnumerable<Domain.Entities.Inss>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Inss
+                     .OrderBy(o => o.Range)
                      .Where(w => w.Competence == competence)
                      .ToListAsync(cancellationToken);
     }
