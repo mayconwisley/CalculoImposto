@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Inss\ValueRoofCompetence\" />
-    <Folder Include="UseCases\Inss\ValueRangeCompetence\" />
   </ItemGroup>
 
   <ItemGroup>
