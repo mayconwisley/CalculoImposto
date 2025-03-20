@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CalculoImposto.Modelo\CalculoImposto.Modelo.csproj" />
-    <ProjectReference Include="..\CalculoImposto\CalculoImposto.API.csproj" />
+    <ProjectReference Include="..\CalculoImposto\CalculoImposto.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

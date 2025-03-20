@@ -1,6 +1,5 @@
 ﻿using CalculoImposto.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace CalculoImposto.Infrastructure.Data;
 
@@ -14,6 +13,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     override protected void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DependencyInjection).Assembly);
     }
 }

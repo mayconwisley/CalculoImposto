@@ -1,6 +1,6 @@
-using CalculoImposto.API.Banco;
 using CalculoImposto.Application;
 using CalculoImposto.Infrastructure;
+using CalculoImposto.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,29 +13,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var passDatabase = Environment.GetEnvironmentVariable("SQLSenha", EnvironmentVariableTarget.Machine);
-string strDatabase = builder.Configuration.GetConnectionString("CalculoImposto")!.Replace("{{pass}}", passDatabase);
-builder.Services.AddDbContext<CalculoImpostoContext>(cd => cd.UseSqlServer(strDatabase));
+string connectionString = builder.Configuration.GetConnectionString("CalculoImposto")!.Replace("{{pass}}", passDatabase);
+
+builder.Services.AddDbContext<AppDbContext>(x =>
+{
+    x.UseSqlServer(connectionString, b => b.MigrationsAssembly("CalculoImposto.Api"));
+});
+
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-
-
-//builder.Services.AddScoped(typeof(ICrudBase<>), typeof(CrudBase<>));
-
-//builder.Services.AddScoped<IInssRepositorio, InssRepositorio>();
-//builder.Services.AddScoped<IInssServico, InssServico>();
-//builder.Services.AddScoped<IIrrfRepositorio, IrrfRepositorio>();
-//builder.Services.AddScoped<IIrrfServico, IrrfServico>();
-//builder.Services.AddScoped<IDependenteRepositorio, DependenteRepositorio>();
-//builder.Services.AddScoped<IDependenteServico, DependenteServico>();
-//builder.Services.AddScoped<IDescontoMinimoRespositorio, DescontoMinimoRepositorio>();
-//builder.Services.AddScoped<IDescontoMinimoServico, DescontoMinimoServico>();
-//builder.Services.AddScoped<ISimplificadoRepositorio, SimplificadoRepositorio>();
-//builder.Services.AddScoped<ISimplificadoServico, SimplificadoServico>();
-//builder.Services.AddScoped<ICalculoImpostoServico, CalculoImpostoServico>();
-//builder.Services.AddScoped<ICalculoBaseEstabilidadeServico, CalculoBaseEstabilidadeServico>();
-
-
 
 var app = builder.Build();
 
