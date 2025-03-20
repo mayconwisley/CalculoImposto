@@ -16,7 +16,6 @@
     <Folder Include="UseCases\Inss\ValueRangeCompetence\" />
     <Folder Include="UseCases\Inss\TotalRange\" />
     <Folder Include="UseCases\Inss\PercentRangeCompetence\" />
-    <Folder Include="UseCases\Inss\Update\" />
   </ItemGroup>
 
   <ItemGroup>
