@@ -10,7 +10,6 @@
     <Folder Include="UseCases\Inss\ValueRoofCompetence\" />
     <Folder Include="UseCases\Inss\ValueRangeCompetence\" />
     <Folder Include="UseCases\Inss\TotalRange\" />
-    <Folder Include="UseCases\Inss\PercentRangeCompetence\" />
   </ItemGroup>
 
   <ItemGroup>
