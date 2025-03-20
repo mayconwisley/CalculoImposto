@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Inss\GetById\" />
-    <Folder Include="UseCases\Inss\GetByCompetence\" />
     <Folder Include="UseCases\Inss\GetRange\" />
     <Folder Include="UseCases\Inss\LastRangeCompetence\" />
     <Folder Include="UseCases\Inss\ValueRoofCompetence\" />
