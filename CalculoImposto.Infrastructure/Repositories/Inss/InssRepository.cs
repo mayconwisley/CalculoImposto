@@ -60,7 +60,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return range;
     }
 
-    public async Task<int> LastRangeCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    public async Task<int> GetLastRangeCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var range = await _appDbContext.Inss
                     .Where(w => w.Competencia == competence)
@@ -68,7 +68,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return range;
     }
 
-    public async Task<decimal> PercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
+    public async Task<decimal> GetPercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
         var percentRange = await _appDbContext.Inss
                            .Where(w => w.Competencia == competence && w.Faixa == range)
@@ -77,7 +77,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return percentRange;
     }
 
-    public async Task<int> TotalRangeAsync(DateTime competence, CancellationToken cancellationToken = default)
+    public async Task<int> GetTotalRangeAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var totalRange = await _appDbContext.Inss
                          .Where(w => w.Competencia == competence)
@@ -97,7 +97,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return inss;
     }
 
-    public async Task<decimal> ValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
+    public async Task<decimal> GetValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
         var valueRange = await _appDbContext.Inss
                          .Where(w => w.Faixa == range &&
@@ -109,7 +109,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return valueRange;
     }
 
-    public async Task<decimal> ValueRoofCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    public async Task<decimal> GetValueRoofCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var valueRoof = await _appDbContext.Inss
                         .Where(w => w.Competencia == _appDbContext.Inss

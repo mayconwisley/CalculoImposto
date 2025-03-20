@@ -8,7 +8,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
-        var percentRange = await _inssRepository.PercentRangeCompetenceAsync(request.Competence, request.Range, cancellationToken);
+        var percentRange = await _inssRepository.GetPercentRangeCompetenceAsync(request.Competence, request.Range, cancellationToken);
         return percentRange == 0 ? Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) : Result.Success(new Response(percentRange));
     }
 }

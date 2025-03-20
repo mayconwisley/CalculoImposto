@@ -8,7 +8,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
-        var lastRange = await _inssRepository.LastRangeCompetenceAsync(request.Competence, cancellationToken);
+        var lastRange = await _inssRepository.GetLastRangeCompetenceAsync(request.Competence, cancellationToken);
         return lastRange == 0 ? Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) : Result.Success(new Response(lastRange));
     }
 }

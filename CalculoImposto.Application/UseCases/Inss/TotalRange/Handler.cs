@@ -8,7 +8,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
-        var totalRange = await _inssRepository.TotalRangeAsync(request.Competente, cancellationToken);
+        var totalRange = await _inssRepository.GetTotalRangeAsync(request.Competente, cancellationToken);
         return totalRange == 0 ? Result.Failure<Response>(Error.NotFound("Faixa não encontrada")) : Result.Success(new Response(totalRange));
     }
 }
