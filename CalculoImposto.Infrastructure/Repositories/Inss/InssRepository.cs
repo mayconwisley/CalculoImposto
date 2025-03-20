@@ -24,7 +24,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return inss;
     }
 
-    public async Task<IEnumerable<Domain.Entities.Inss>> GetAllAsync(int page, int size, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Domain.Entities.Inss>> GetAllAsync(int page = 0, int size = 25, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Inss
                     .Skip((page - 1) * size)

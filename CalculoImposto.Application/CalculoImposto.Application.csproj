@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Inss\GetAll\" />
     <Folder Include="UseCases\Inss\GetById\" />
     <Folder Include="UseCases\Inss\GetByCompetence\" />
     <Folder Include="UseCases\Inss\GetRange\" />

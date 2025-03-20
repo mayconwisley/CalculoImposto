@@ -9,7 +9,7 @@ public interface IInssRepository
     Task<decimal> ValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default);
     Task<decimal> ValueRoofCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default);
     Task<int> TotalRangeAsync(DateTime competence, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Entities.Inss>> GetAllAsync(int page, int size, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Entities.Inss>> GetAllAsync(int page = 0, int size = 25, CancellationToken cancellationToken = default);
     Task<Entities.Inss> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Entities.Inss> CreateAsync(Entities.Inss inss, CancellationToken cancellationToken = default);
     Task<Entities.Inss> UpdateAsync(Entities.Inss inss, CancellationToken cancellationToken = default);
