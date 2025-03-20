@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Inss\Delete\" />
+    <Folder Include="UseCases\Inss\GetAll\" />
+    <Folder Include="UseCases\Inss\GetById\" />
+    <Folder Include="UseCases\Inss\GetByCompetence\" />
+    <Folder Include="UseCases\Inss\GetRange\" />
+    <Folder Include="UseCases\Inss\LastRangeCompetence\" />
+    <Folder Include="UseCases\Inss\ValueRoofCompetence\" />
+    <Folder Include="UseCases\Inss\ValueRangeCompetence\" />
+    <Folder Include="UseCases\Inss\TotalRange\" />
+    <Folder Include="UseCases\Inss\PercentRangeCompetence\" />
+    <Folder Include="UseCases\Inss\Update\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CalculoImposto.Domain\CalculoImposto.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

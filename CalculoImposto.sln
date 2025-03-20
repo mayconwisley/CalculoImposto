@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoImposto.Domain", "Ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoImposto.Infrastructure", "CalculoImposto.Infrastructure\CalculoImposto.Infrastructure.csproj", "{34EA6110-C5AE-4B2A-8033-27A2B4619E1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoImposto.Application", "CalculoImposto.Application\CalculoImposto.Application.csproj", "{5E02296D-89EE-4180-BD1F-A5895100F779}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{34EA6110-C5AE-4B2A-8033-27A2B4619E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34EA6110-C5AE-4B2A-8033-27A2B4619E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34EA6110-C5AE-4B2A-8033-27A2B4619E1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E02296D-89EE-4180-BD1F-A5895100F779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E02296D-89EE-4180-BD1F-A5895100F779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E02296D-89EE-4180-BD1F-A5895100F779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E02296D-89EE-4180-BD1F-A5895100F779}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
