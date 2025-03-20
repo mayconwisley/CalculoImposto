@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Inss\LastRangeCompetence\" />
     <Folder Include="UseCases\Inss\ValueRoofCompetence\" />
     <Folder Include="UseCases\Inss\ValueRangeCompetence\" />
     <Folder Include="UseCases\Inss\TotalRange\" />
