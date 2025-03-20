@@ -9,6 +9,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
         var inssList = await _inssRepository.GetAllAsync(request.Page, request.Size, cancellationToken);
-        return inssList is null ? Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) : Result.Success(new Response(inssList));
+        return inssList is null ? Result.Failure<Response>(Error.NotFound("Lista de Inss não encontrado")) :
+                                  Result.Success(new Response(inssList));
     }
 }

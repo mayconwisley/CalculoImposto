@@ -9,6 +9,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
         var percentRange = await _inssRepository.GetPercentRangeCompetenceAsync(request.Competence, request.Range, cancellationToken);
-        return percentRange == 0 ? Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) : Result.Success(new Response(percentRange));
+        return percentRange == 0 ? Result.Failure<Response>(Error.NotFound("Percentual não encontrado na competência e faixa informado")) :
+                                   Result.Success(new Response(percentRange));
     }
 }
