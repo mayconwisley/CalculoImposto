@@ -1,3 +1,3 @@
 ﻿namespace CalculoImposto.Application.Dtos;
 
-public sealed record PagedResult<T>(IEnumerable<T> Items, int TotalItems, int TotalPages, int CurrentPage);
+public sealed record PagedResult<T>(IEnumerable<T> Data, int TotalItems, int PagesCounts, int PageNumber);

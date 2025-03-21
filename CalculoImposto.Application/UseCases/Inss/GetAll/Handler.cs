@@ -14,7 +14,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
         var totalPages = (int)Math.Ceiling((decimal)totalItems / request.Size);
         var inssList = await _inssRepository.GetAllAsync(request.Page, request.Size, cancellationToken);
 
-        var pagedResult = new PagedResult<Domain.Entities.Inss>
+        var inss = new PagedResult<Domain.Entities.Inss>
         (
             inssList,
             totalItems,
@@ -22,7 +22,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
             request.Page
         );
 
-        return inssList is null ? Result.Failure<Response>(Error.NotFound("Lista de Inss não encontrado")) :
-                                  Result.Success(new Response(pagedResult));
+        return inss is null ? Result.Failure<Response>(Error.NotFound("Lista de Inss não encontrado")) :
+                                  Result.Success(new Response(inss));
     }
 }
