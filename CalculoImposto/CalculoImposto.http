@@ -1,6 +1,6 @@
-@CalculoImposto_HostAddress = http://localhost:5012
+@CalculoImposto_HostAddress = https://localhost:5012
 
-GET {{CalculoImposto_HostAddress}}/api/Inss/
+GET {{CalculoImposto_HostAddress}}/api/Inss?page=1&size=4
 Accept: application/json
 ###
 

@@ -55,7 +55,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         return inss;
     }
 
-    public async Task<int> GetRangeAsync(DateTime competence, decimal baseInss, CancellationToken cancellationToken = default)
+    public async Task<int> GetRangeByCompetenceAndBaseInssAsync(DateTime competence, decimal baseInss, CancellationToken cancellationToken = default)
     {
         var range = await _appDbContext.Inss
                     .Where(w => w.Value >= baseInss &&

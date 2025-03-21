@@ -15,6 +15,94 @@ public class InssController(ISender _sender) : ControllerBase
 
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
+    }
 
+    [HttpGet("competence/{competence:datetime}")]
+    public async Task<ActionResult> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetByCompetence.Command(competence);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+
+    [HttpGet("rangeByCompetenceAndBaseInss/{competence:datetime}/{baseInss:decimal}")]
+    public async Task<ActionResult> GetRangeByCompetenceAndBaseInssAsync(DateTime competence, decimal baseInss, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetRange.Command(competence, baseInss);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+
+    [HttpGet("lastRangeByCompetence/{competence:datetime}")]
+    public async Task<ActionResult> GetLastRangeCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetLastRangeCompetence.Command(competence);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+
+    [HttpGet("percentRangeCompetence/{competence:datetime}/{range:int}")]
+    public async Task<ActionResult> GetPercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetLastRangeCompetence.Command(competence);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+
+    [HttpGet("valueRangeCompetence/{competence:datetime}/{range:int}")]
+    public async Task<ActionResult> GetValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetValueRangeCompetence.Command(competence, range);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+
+    [HttpGet("valueRoofCompetence/{competence:datetime}")]
+    public async Task<ActionResult> GetValueRoofCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetValueRoofCompetence.Command(competence);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+
+
+    [HttpPost]
+    public async Task<ActionResult> CreateAsync([FromBody] Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.Create.Command(inss);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+    [HttpPut]
+    public async Task<ActionResult> UpdateAsync([FromBody] Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.Update.Command(inss);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
+    }
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.Delete.Command(id);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
     }
 }
