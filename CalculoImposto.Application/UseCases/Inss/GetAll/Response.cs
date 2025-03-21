@@ -1,3 +1,5 @@
-﻿namespace CalculoImposto.Application.UseCases.Inss.GetAll;
+﻿using CalculoImposto.Application.Dtos;
 
-public sealed record Response(IEnumerable<Domain.Entities.Inss> InssList);
+namespace CalculoImposto.Application.UseCases.Inss.GetAll;
+
+public sealed record Response(PagedResult<Domain.Entities.Inss> PagedResult);

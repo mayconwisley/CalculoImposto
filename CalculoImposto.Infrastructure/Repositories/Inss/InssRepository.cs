@@ -120,4 +120,9 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
                         .MaxAsync(m => m.Value, cancellationToken);
         return valueRoof;
     }
+
+    public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
+    {
+        return await _appDbContext.Inss.CountAsync(cancellationToken);
+    }
 }
