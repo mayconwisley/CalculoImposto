@@ -90,6 +90,11 @@ public class InssController(ISender _sender) : ControllerBase
     [HttpPut]
     public async Task<ActionResult> UpdateAsync([FromBody] Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
     {
+        if (string.IsNullOrEmpty(inss.Id.ToString()))
+        {
+            return BadRequest("Id é requerido na entidade INSS");
+        }
+
         var command = new Application.UseCases.Inss.Update.Command(inss);
         var result = await _sender.Send(command, cancellationToken);
 
