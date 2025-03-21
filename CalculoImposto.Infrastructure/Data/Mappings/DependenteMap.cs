@@ -17,6 +17,6 @@ public class DependenteMap : IEntityTypeConfiguration<Dependente>
             .HasColumnType("DECIMAL(18,2)")
             .IsRequired();
 
-        builder.HasData(new Dependente { Id = Guid.NewGuid(), Value = 189.59m, Competence = DateTime.Parse("01/01/2015") });
+        builder.HasData(new Dependente { Id = new Guid("b8738c50-3292-4ecb-af01-57cb7d62f97a"), Value = 189.59m, Competence = DateTime.Parse("01/01/2015") });
     }
 }

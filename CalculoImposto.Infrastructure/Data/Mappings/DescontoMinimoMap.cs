@@ -16,6 +16,6 @@ public class DescontoMinimoMap : IEntityTypeConfiguration<DescontoMinimo>
         builder.Property(x => x.Value)
             .HasColumnType("DECIMAL(18,2)")
             .IsRequired();
-        builder.HasData(new DescontoMinimo { Id = Guid.NewGuid(), Value = 10m, Competence = DateTime.Parse("01/05/2023") });
+        builder.HasData(new DescontoMinimo { Id = new Guid("7f1b5cb3-cc50-4b61-a069-23c8405ff803"), Value = 10m, Competence = DateTime.Parse("01/05/2023") });
     }
 }
