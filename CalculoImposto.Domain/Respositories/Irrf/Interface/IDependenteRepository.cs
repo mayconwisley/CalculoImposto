@@ -1,6 +1,6 @@
 ﻿namespace CalculoImposto.Domain.Respositories.Irrf.Interface;
 
-public interface IDependenteRepositorio
+public interface IDependenteRepository
 {
     Task<decimal> ValueDependent(DateTime competence);
     Task<int> TotalDependent();

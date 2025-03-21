@@ -12,7 +12,6 @@ public interface IInssRepository
     Task<decimal> GetValueRoofCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default);
     Task<int> GetTotalRangeAsync(DateTime competence, CancellationToken cancellationToken = default);
     Task<int> GetCountAsync(CancellationToken cancellationToken = default);
-
     Task<Entities.Inss> CreateAsync(Entities.Inss inss, CancellationToken cancellationToken = default);
     Task<Entities.Inss> UpdateAsync(Entities.Inss inss, CancellationToken cancellationToken = default);
     Task<Entities.Inss> DeleteAsync(Guid id, CancellationToken cancellationToken = default);

@@ -108,8 +108,8 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         var valueRange = await _appDbContext.Inss
                          .Where(w => w.Range == range &&
                                      w.Competence == _appDbContext.Inss
-                                                      .Where(w => w.Competence <= competence)
-                                                      .Max(m => m.Competence))
+                                                     .Where(w => w.Competence <= competence)
+                                                     .Max(m => m.Competence))
                          .Select(s => s.Value)
                          .FirstOrDefaultAsync(cancellationToken);
         return valueRange;
@@ -119,8 +119,8 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
     {
         var valueRoof = await _appDbContext.Inss
                         .Where(w => w.Competence == _appDbContext.Inss
-                                                     .Where(w => w.Competence <= competence)
-                                                     .Max(m => m.Competence))
+                                                    .Where(w => w.Competence <= competence)
+                                                    .Max(m => m.Competence))
                         .MaxAsync(m => m.Value, cancellationToken);
         return valueRoof;
     }

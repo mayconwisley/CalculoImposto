@@ -1,6 +1,6 @@
 ﻿namespace CalculoImposto.Domain.Respositories.Irrf.Interface;
 
-public interface IDescontoMinimoRespositorio
+public interface IDescontoMinimoRespository
 {
     Task<decimal> ValueCompetence(DateTime competencia);
     Task<int> Total();

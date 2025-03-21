@@ -1,6 +1,6 @@
 ﻿namespace CalculoImposto.Domain.Respositories.Irrf.Interface;
 
-public interface IIrrfRepositorio
+public interface IIrrfRepository
 {
 
     Task<int> GetRange(DateTime competence, decimal valueGross);

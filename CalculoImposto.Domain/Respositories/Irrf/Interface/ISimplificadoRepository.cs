@@ -1,6 +1,6 @@
 ﻿namespace CalculoImposto.Domain.Respositories.Irrf.Interface;
 
-public interface ISimplificadoRepositorio
+public interface ISimplificadoRepository
 {
     Task<decimal> ValueCompetence(DateTime competence);
     Task<int> Total();
