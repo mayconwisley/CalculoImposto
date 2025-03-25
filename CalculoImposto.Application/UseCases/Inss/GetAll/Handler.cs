@@ -16,7 +16,7 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
 
         var inssDto = new PagedResult<InssDto>
         (
-            inssList.ToListInssDto(),
+            inssList.ToListInssByDto(),
             totalItems,
             totalPages,
             request.Page

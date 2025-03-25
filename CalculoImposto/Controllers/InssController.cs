@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CalculoImposto.Application.Dtos.Inss;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalculoImposto.API.Controllers;
@@ -79,9 +80,9 @@ public class InssController(ISender _sender) : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult> CreateAsync([FromBody] Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> CreateAsync([FromBody] InssDto inssDto, CancellationToken cancellationToken = default)
     {
-        var command = new Application.UseCases.Inss.Create.Command(inss);
+        var command = new Application.UseCases.Inss.Create.Command(inssDto);
         var result = await _sender.Send(command, cancellationToken);
 
         return result.IsSucess ? Ok(result.Value) :
