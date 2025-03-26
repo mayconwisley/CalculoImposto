@@ -4,4 +4,4 @@ using MediatR;
 
 namespace CalculoImposto.Application.UseCases.Inss.Create;
 
-public sealed record Command(InssDto InssDto) : IRequest<Result<Response>>;
+public sealed record Command(InssCreateDto InssCreateDto) : IRequest<Result<Response>>;

@@ -9,8 +9,8 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
-        var inss = await _inssRepository.CreateAsync(request.InssDto.ToInss(), cancellationToken);
+        var inss = await _inssRepository.CreateAsync(request.InssCreateDto.ToInssCreateDtoFromInss(), cancellationToken);
         return inss is null ? Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) :
-                              Result.Success(new Response(inss.ToInssDto()));
+                              Result.Success(new Response(inss.ToInssFromInssDto()));
     }
 }

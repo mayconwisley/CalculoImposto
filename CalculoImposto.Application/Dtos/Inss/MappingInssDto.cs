@@ -2,14 +2,14 @@
 
 public static class MappingInssDto
 {
-    public static IEnumerable<InssDto> ToListInssByDto(this IEnumerable<Domain.Entities.Inss> inssList)
+    public static IEnumerable<InssDto> ToListInssFromInssDto(this IEnumerable<Domain.Entities.Inss> inssList)
     {
         return [.. (from inss in inssList
                 select new InssDto(inss.Id, inss.Range, inss.Percent, inss.Competence, inss.Value)
             )];
     }
 
-    public static IEnumerable<Domain.Entities.Inss> ToListDtoByInss(this IEnumerable<InssDto> inssDtoList)
+    public static IEnumerable<Domain.Entities.Inss> ToListInssDtoFromListInss(this IEnumerable<InssDto> inssDtoList)
     {
         return [.. (from inss in inssDtoList
                     select new Domain.Entities.Inss()
@@ -23,12 +23,24 @@ public static class MappingInssDto
             )];
     }
 
-    public static InssDto ToInssDto(this Domain.Entities.Inss inss)
+    public static InssDto ToInssFromInssDto(this Domain.Entities.Inss inss)
     {
         return new InssDto(inss.Id, inss.Range, inss.Percent, inss.Competence, inss.Value);
     }
 
-    public static Domain.Entities.Inss ToInss(this InssDto inssDto)
+    public static Domain.Entities.Inss ToInssCreateDtoFromInss(this InssCreateDto inssCreateDto)
+    {
+        return new Domain.Entities.Inss()
+        {
+            Id = Guid.NewGuid(),
+            Range = inssCreateDto.Range,
+            Percent = inssCreateDto.Percent,
+            Competence = inssCreateDto.Competence,
+            Value = inssCreateDto.Value
+        };
+    }
+
+    public static Domain.Entities.Inss ToInssDtoFromInss(this InssDto inssDto)
     {
         return new Domain.Entities.Inss()
         {

@@ -80,7 +80,7 @@ public class InssController(ISender _sender) : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult> CreateAsync([FromBody] InssDto inssDto, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> CreateAsync([FromBody] InssCreateDto inssDto, CancellationToken cancellationToken = default)
     {
         var command = new Application.UseCases.Inss.Create.Command(inssDto);
         var result = await _sender.Send(command, cancellationToken);
