@@ -1,4 +1,6 @@
-﻿namespace CalculoImposto.Application.UseCases.Inss.GetById;
+﻿using CalculoImposto.Application.Dtos.Inss;
 
-public sealed record Response(Domain.Entities.Inss Inss);
+namespace CalculoImposto.Application.UseCases.Inss.GetById;
+
+public sealed record Response(InssDto InssDto);
 

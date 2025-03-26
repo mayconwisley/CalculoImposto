@@ -1,3 +1,5 @@
-﻿namespace CalculoImposto.Application.UseCases.Inss.Delete;
+﻿using CalculoImposto.Application.Dtos.Inss;
 
-public sealed record Response(Domain.Entities.Inss Inss);
+namespace CalculoImposto.Application.UseCases.Inss.Delete;
+
+public sealed record Response(InssDto InssDto);

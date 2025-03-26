@@ -1,4 +1,5 @@
-﻿using CalculoImposto.Domain.Abstractions;
+﻿using CalculoImposto.Application.Dtos.Inss;
+using CalculoImposto.Domain.Abstractions;
 using CalculoImposto.Domain.Respositories.Inss.Interface;
 using MediatR;
 
@@ -10,6 +11,6 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
     {
         var inssList = await _inssRepository.GetByCompetenceAsync(request.Competence, cancellationToken);
         return inssList is null ? Result.Failure<Response>(Error.NotFound("Lista de Inss não encontrado na competência informada")) :
-                                  Result.Success(new Response(inssList));
+                                  Result.Success(new Response(inssList.ToListInssFromInssDto()));
     }
 }

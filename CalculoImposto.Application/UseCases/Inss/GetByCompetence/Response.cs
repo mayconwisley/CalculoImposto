@@ -1,3 +1,5 @@
-﻿namespace CalculoImposto.Application.UseCases.Inss.GetByCompetence;
+﻿using CalculoImposto.Application.Dtos.Inss;
 
-public sealed record Response(IEnumerable<Domain.Entities.Inss> InssList);
+namespace CalculoImposto.Application.UseCases.Inss.GetByCompetence;
+
+public sealed record Response(IEnumerable<InssDto> InssDtoList);
