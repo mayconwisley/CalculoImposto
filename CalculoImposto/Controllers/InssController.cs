@@ -89,14 +89,14 @@ public class InssController(ISender _sender) : ControllerBase
                                  BadRequest(result.Error);
     }
     [HttpPut]
-    public async Task<ActionResult> UpdateAsync([FromBody] Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> UpdateAsync([FromBody] InssDto inssDto, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrEmpty(inss.Id.ToString()))
+        if (string.IsNullOrEmpty(inssDto.Id.ToString()))
         {
             return BadRequest("Id é requerido na entidade INSS");
         }
 
-        var command = new Application.UseCases.Inss.Update.Command(inss);
+        var command = new Application.UseCases.Inss.Update.Command(inssDto);
         var result = await _sender.Send(command, cancellationToken);
 
         return result.IsSucess ? Ok(result.Value) :

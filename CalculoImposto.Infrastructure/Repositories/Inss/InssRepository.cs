@@ -30,16 +30,18 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         if (size < 1) size = 25;
 
         return await _appDbContext.Inss
-                        .OrderBy(o => o.Competence)
-                        .ThenBy(o => o.Range)
-                        .Skip((page - 1) * size)
-                        .Take(size)
-                        .ToListAsync(cancellationToken);
+                     .AsNoTracking()
+                     .OrderBy(o => o.Competence)
+                     .ThenBy(o => o.Range)
+                     .Skip((page - 1) * size)
+                     .Take(size)
+                     .ToListAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Domain.Entities.Inss>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Inss
+                     .AsNoTracking()
                      .OrderBy(o => o.Range)
                      .Where(w => w.Competence == competence)
                      .ToListAsync(cancellationToken);
@@ -47,7 +49,9 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
 
     public async Task<Domain.Entities.Inss> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var inss = await _appDbContext.Inss.FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
+        var inss = await _appDbContext.Inss
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
         if (inss is null)
         {
             return new();
@@ -58,36 +62,40 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
     public async Task<int> GetRangeByCompetenceAndBaseInssAsync(DateTime competence, decimal baseInss, CancellationToken cancellationToken = default)
     {
         var range = await _appDbContext.Inss
-                    .Where(w => w.Value >= baseInss &&
-                                w.Competence == _appDbContext.Inss
-                                                .Where(w => w.Competence <= competence)
-                                                .Max(m => m.Competence))
-                    .MinAsync(m => m.Range, cancellationToken);
+                          .AsNoTracking()
+                          .Where(w => w.Value >= baseInss &&
+                                      w.Competence == _appDbContext.Inss
+                                                      .Where(w => w.Competence <= competence)
+                                                      .Max(m => m.Competence))
+                          .MinAsync(m => m.Range, cancellationToken);
         return range;
     }
 
     public async Task<int> GetLastRangeCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var range = await _appDbContext.Inss
-                    .Where(w => w.Competence == competence)
-                    .MaxAsync(m => m.Range, cancellationToken);
+                          .AsNoTracking()
+                          .Where(w => w.Competence == competence)
+                          .MaxAsync(m => m.Range, cancellationToken);
         return range;
     }
 
     public async Task<decimal> GetPercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
         var percentRange = await _appDbContext.Inss
-                           .Where(w => w.Competence == competence && w.Range == range)
-                           .Select(s => s.Percent)
-                           .FirstOrDefaultAsync(cancellationToken);
+                                 .AsNoTracking()
+                                 .Where(w => w.Competence == competence && w.Range == range)
+                                 .Select(s => s.Percent)
+                                 .FirstOrDefaultAsync(cancellationToken);
         return percentRange;
     }
 
     public async Task<int> GetTotalRangeAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var totalRange = await _appDbContext.Inss
-                         .Where(w => w.Competence == competence)
-                         .CountAsync(cancellationToken);
+                               .AsNoTracking()
+                               .Where(w => w.Competence == competence)
+                               .CountAsync(cancellationToken);
         return totalRange;
     }
 
@@ -99,7 +107,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
             return new();
         }
 
-        _appDbContext.Update(inss);
+        _appDbContext.Inss.Update(inss);
         return inss;
     }
 

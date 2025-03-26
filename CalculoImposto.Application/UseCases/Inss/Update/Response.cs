@@ -1,3 +1,5 @@
-﻿namespace CalculoImposto.Application.UseCases.Inss.Update;
+﻿using CalculoImposto.Application.Dtos.Inss;
 
-public sealed record Response(Domain.Entities.Inss Inss);
+namespace CalculoImposto.Application.UseCases.Inss.Update;
+
+public sealed record Response(InssDto InssDto);
