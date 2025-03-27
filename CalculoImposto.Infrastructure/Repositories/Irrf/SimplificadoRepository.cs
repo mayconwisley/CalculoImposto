@@ -5,42 +5,42 @@ namespace CalculoImposto.Infrastructure.Repositories.Irrf;
 
 public class SimplificadoRepository : ISimplificadoRepository
 {
-    public Task<Simplificado> Create(Simplificado simplificado)
+    public Task<Simplificado> CreateAsync(Simplificado simplificado, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Simplificado> Delete(int id)
+    public Task<Simplificado> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Simplificado>> GetAll(int page, int size, string search)
+    public Task<IEnumerable<Simplificado>> GetAllAsync(int page, int size, string search, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Simplificado> GetByCompetence(DateTime competence)
+    public Task<Simplificado> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Simplificado> GetById(int id)
+    public Task<Simplificado> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<int> Total()
+    public Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Simplificado> Update(Simplificado simplificado)
+    public Task<decimal> GetValueCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<decimal> ValueCompetence(DateTime competence)
+    public Task<Simplificado> UpdateAsync(Simplificado simplificado, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

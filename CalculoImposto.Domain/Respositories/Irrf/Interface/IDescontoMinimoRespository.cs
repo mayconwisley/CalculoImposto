@@ -2,13 +2,12 @@
 
 public interface IDescontoMinimoRespository
 {
-    Task<decimal> ValueCompetence(DateTime competencia);
-    Task<int> Total();
-
-    Task<IEnumerable<Entities.DescontoMinimo>> GetAll(int page, int size, string search);
-    Task<Entities.DescontoMinimo> GetByCompetence(DateTime competence);
-    Task<Entities.DescontoMinimo> GetById(int id);
-    Task<Entities.DescontoMinimo> Create(Entities.DescontoMinimo descontoMinimo);
-    Task<Entities.DescontoMinimo> Update(Entities.DescontoMinimo descontoMinimo);
-    Task<Entities.DescontoMinimo> Delete(int id);
+    Task<IEnumerable<Entities.DescontoMinimo>> GetAllAsync(int page, int size, string search, CancellationToken cancellationToken = default);
+    Task<Entities.DescontoMinimo> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default);
+    Task<Entities.DescontoMinimo> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<decimal> ValueCompetenceAsync(DateTime competencia, CancellationToken cancellationToken = default);
+    Task<int> GetCountAsync(CancellationToken cancellationToken = default);
+    Task<Entities.DescontoMinimo> CreateAsync(Entities.DescontoMinimo descontoMinimo, CancellationToken cancellationToken = default);
+    Task<Entities.DescontoMinimo> UpdateAsync(Entities.DescontoMinimo descontoMinimo, CancellationToken cancellationToken = default);
+    Task<Entities.DescontoMinimo> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

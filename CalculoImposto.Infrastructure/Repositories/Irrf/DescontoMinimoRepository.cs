@@ -5,42 +5,42 @@ namespace CalculoImposto.Infrastructure.Repositories.Irrf;
 
 public class DescontoMinimoRepository : IDescontoMinimoRespository
 {
-    public Task<DescontoMinimo> Create(DescontoMinimo descontoMinimo)
+    public Task<DescontoMinimo> CreateAsync(DescontoMinimo descontoMinimo, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<DescontoMinimo> Delete(int id)
+    public Task<DescontoMinimo> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<DescontoMinimo>> GetAll(int page, int size, string search)
+    public Task<IEnumerable<DescontoMinimo>> GetAllAsync(int page, int size, string search, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<DescontoMinimo> GetByCompetence(DateTime competence)
+    public Task<DescontoMinimo> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<DescontoMinimo> GetById(int id)
+    public Task<DescontoMinimo> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<int> Total()
+    public Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<DescontoMinimo> Update(DescontoMinimo descontoMinimo)
+    public Task<DescontoMinimo> UpdateAsync(DescontoMinimo descontoMinimo, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<decimal> ValueCompetence(DateTime competencia)
+    public Task<decimal> ValueCompetenceAsync(DateTime competencia, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
