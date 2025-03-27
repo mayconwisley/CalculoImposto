@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CalculoImposto.Application.Dtos.Irrf;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalculoImposto.Api.Controllers;
@@ -16,5 +17,15 @@ public class IrrfController(ISender _sender) : ControllerBase
         return result.IsSucess ?
             Ok(result.Value) :
             BadRequest(result.Error);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateAsync([FromBody] IrrfCreateDto irrfCreateDto, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Irrf.Create.Command(irrfCreateDto);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ? Ok(result.Value) :
+                                 BadRequest(result.Error);
     }
 }
