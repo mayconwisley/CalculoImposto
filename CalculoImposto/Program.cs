@@ -26,7 +26,10 @@ var app = builder.Build();
 app.MapOpenApi();
 if (app.Environment.IsDevelopment())
 {
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(opt =>
+    {
+        opt.Title = "Calculo Imposto API";
+    });
 }
 
 app.UseAuthorization();
