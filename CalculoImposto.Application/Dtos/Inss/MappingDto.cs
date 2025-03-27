@@ -1,6 +1,6 @@
 ﻿namespace CalculoImposto.Application.Dtos.Inss;
 
-public static class MappingInssDto
+public static class MappingDto
 {
     public static IEnumerable<InssDto> ToListInssFromInssDto(this IEnumerable<Domain.Entities.Inss> inssList)
     {
@@ -8,7 +8,6 @@ public static class MappingInssDto
                 select new InssDto(inss.Id, inss.Range, inss.Percent, inss.Competence, inss.Value)
             )];
     }
-
     public static IEnumerable<Domain.Entities.Inss> ToListInssDtoFromListInss(this IEnumerable<InssDto> inssDtoList)
     {
         return [.. (from inss in inssDtoList
@@ -22,24 +21,10 @@ public static class MappingInssDto
                     }
             )];
     }
-
     public static InssDto ToInssFromInssDto(this Domain.Entities.Inss inss)
     {
         return new InssDto(inss.Id, inss.Range, inss.Percent, inss.Competence, inss.Value);
     }
-
-    public static Domain.Entities.Inss ToInssCreateDtoFromInss(this InssCreateDto inssCreateDto)
-    {
-        return new Domain.Entities.Inss()
-        {
-            Id = Guid.NewGuid(),
-            Range = inssCreateDto.Range,
-            Percent = inssCreateDto.Percent,
-            Competence = inssCreateDto.Competence,
-            Value = inssCreateDto.Value
-        };
-    }
-
     public static Domain.Entities.Inss ToInssDtoFromInss(this InssDto inssDto)
     {
         return new Domain.Entities.Inss()
@@ -49,6 +34,17 @@ public static class MappingInssDto
             Percent = inssDto.Percent,
             Competence = inssDto.Competence,
             Value = inssDto.Value
+        };
+    }
+    public static Domain.Entities.Inss ToInssCreateDtoFromInss(this InssCreateDto inssCreateDto)
+    {
+        return new Domain.Entities.Inss()
+        {
+            Id = Guid.NewGuid(),
+            Range = inssCreateDto.Range,
+            Percent = inssCreateDto.Percent,
+            Competence = inssCreateDto.Competence,
+            Value = inssCreateDto.Value
         };
     }
 }
