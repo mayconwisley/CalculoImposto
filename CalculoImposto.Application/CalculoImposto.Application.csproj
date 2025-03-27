@@ -10,7 +10,4 @@
   <ItemGroup>
     <ProjectReference Include="..\CalculoImposto.Domain\CalculoImposto.Domain.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UseCases\Irrf\GetByCompetence\" />
-  </ItemGroup>
 </Project>

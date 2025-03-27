@@ -51,7 +51,7 @@ public class InssController(ISender _sender) : ControllerBase
             BadRequest(result.Error);
     }
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult> GetByCompetenceAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var command = new Application.UseCases.Inss.GetById.Command(id);
         var result = await _sender.Send(command, cancellationToken);

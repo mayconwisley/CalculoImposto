@@ -52,7 +52,7 @@ public class IrrfController(ISender _sender) : ControllerBase
             BadRequest(result.Error);
     }
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult> GetByCompetenceAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var command = new Application.UseCases.Irrf.GetById.Command(id);
         var result = await _sender.Send(command, cancellationToken);
@@ -61,5 +61,14 @@ public class IrrfController(ISender _sender) : ControllerBase
             Ok(result.Value) :
             BadRequest(result.Error);
     }
+    [HttpGet("competence/{competence:datetime}")]
+    public async Task<ActionResult> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Irrf.GetByCompetence.Command(competence);
+        var result = await _sender.Send(command, cancellationToken);
 
+        return result.IsSucess ?
+            Ok(result.Value) :
+            BadRequest(result.Error);
+    }
 }
