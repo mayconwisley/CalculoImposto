@@ -50,7 +50,16 @@ public class InssController(ISender _sender) : ControllerBase
             Ok(result.Value) :
             BadRequest(result.Error);
     }
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult> GetByCompetenceAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Inss.GetById.Command(id);
+        var result = await _sender.Send(command, cancellationToken);
 
+        return result.IsSucess ?
+            Ok(result.Value) :
+            BadRequest(result.Error);
+    }
     [HttpGet("competence/{competence:datetime}")]
     public async Task<ActionResult> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
@@ -60,7 +69,6 @@ public class InssController(ISender _sender) : ControllerBase
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
     }
-
     [HttpGet("rangeByCompetenceAndBaseInss/{competence:datetime}/{baseInss:decimal}")]
     public async Task<ActionResult> GetRangeByCompetenceAndBaseInssAsync(DateTime competence, decimal baseInss, CancellationToken cancellationToken = default)
     {
@@ -70,7 +78,6 @@ public class InssController(ISender _sender) : ControllerBase
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
     }
-
     [HttpGet("lastRangeByCompetence/{competence:datetime}")]
     public async Task<ActionResult> GetLastRangeCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
@@ -80,7 +87,6 @@ public class InssController(ISender _sender) : ControllerBase
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
     }
-
     [HttpGet("percentRangeCompetence/{competence:datetime}/{range:int}")]
     public async Task<ActionResult> GetPercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
@@ -90,7 +96,6 @@ public class InssController(ISender _sender) : ControllerBase
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
     }
-
     [HttpGet("valueRangeCompetence/{competence:datetime}/{range:int}")]
     public async Task<ActionResult> GetValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
@@ -100,7 +105,6 @@ public class InssController(ISender _sender) : ControllerBase
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
     }
-
     [HttpGet("valueRoofCompetence/{competence:datetime}")]
     public async Task<ActionResult> GetValueRoofCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
@@ -110,7 +114,4 @@ public class InssController(ISender _sender) : ControllerBase
         return result.IsSucess ? Ok(result.Value) :
                                  BadRequest(result.Error);
     }
-
-
-
 }

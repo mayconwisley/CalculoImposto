@@ -50,7 +50,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
                         .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
         if (inss is null)
         {
-            return new();
+            return null;
         }
         return inss;
     }

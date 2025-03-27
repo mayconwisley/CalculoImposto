@@ -51,4 +51,15 @@ public class IrrfController(ISender _sender) : ControllerBase
             Ok(result.Value) :
             BadRequest(result.Error);
     }
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult> GetByCompetenceAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var command = new Application.UseCases.Irrf.GetById.Command(id);
+        var result = await _sender.Send(command, cancellationToken);
+
+        return result.IsSucess ?
+            Ok(result.Value) :
+            BadRequest(result.Error);
+    }
+
 }
