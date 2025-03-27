@@ -88,7 +88,7 @@ public class IrrfRepository(AppDbContext _appDbContext) : IIrrfRepository
     }
     public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
-        return await _appDbContext.Inss
+        return await _appDbContext.Irrf
                      .AsNoTracking()
                      .CountAsync(cancellationToken);
     }

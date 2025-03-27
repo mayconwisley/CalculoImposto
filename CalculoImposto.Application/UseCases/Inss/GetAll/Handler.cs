@@ -22,7 +22,8 @@ public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<C
             request.Page
         );
 
-        return inssDto is null ? Result.Failure<Response>(Error.NotFound("Lista de Inss não encontrado")) :
-                                 Result.Success(new Response(inssDto));
+        return inssDto is null ?
+               Result.Failure<Response>(Error.NotFound("Lista de Inss não encontrado")) :
+               Result.Success(new Response(inssDto));
     }
 }
