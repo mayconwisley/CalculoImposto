@@ -2,4 +2,4 @@
 
 namespace CalculoImposto.Application.UseCases.Inss.Delete;
 
-public sealed record Response(InssDto InssDto);
+public sealed record Response(InssDto InssDtoDeleted);
