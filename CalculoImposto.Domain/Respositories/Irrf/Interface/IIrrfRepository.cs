@@ -2,17 +2,15 @@
 
 public interface IIrrfRepository
 {
-
-    Task<int> GetRange(DateTime competence, decimal valueGross);
-    Task<decimal> PercentRangeCompetence(DateTime competence, int range);
-    Task<decimal> DeductionRangeCompetence(DateTime competence, int range);
-    Task<decimal> ValueRangeCompetence(DateTime competence, int range);
-    Task<int> Total();
-
-    Task<IEnumerable<Entities.Irrf>> GetByCompetence(DateTime competence);
-    Task<IEnumerable<Entities.Irrf>> GetAll(int page, int size);
-    Task<Entities.Irrf> GetById(int id);
-    Task<Entities.Irrf> Create(Entities.Irrf irrf);
-    Task<Entities.Irrf> Update(Entities.Irrf irrf);
-    Task<Entities.Irrf> Delete(int id);
+    Task<IEnumerable<Entities.Irrf>> GetAllAsync(int page, int size, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Entities.Irrf>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default);
+    Task<Entities.Irrf> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<int> GetRangeByCompetenceAndBaseInssAsync(DateTime competence, decimal valueGross, CancellationToken cancellationToken = default);
+    Task<decimal> GetPercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default);
+    Task<decimal> GetDeductionRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default);
+    Task<decimal> GetValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default);
+    Task<int> GetCountAsync(CancellationToken cancellationToken = default);
+    Task<Entities.Irrf> CreateAsync(Entities.Irrf irrf, CancellationToken cancellationToken = default);
+    Task<Entities.Irrf> UpdateAsync(Entities.Irrf irrf, CancellationToken cancellationToken = default);
+    Task<Entities.Irrf> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

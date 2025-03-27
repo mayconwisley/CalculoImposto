@@ -1,61 +1,117 @@
 ﻿using CalculoImposto.Domain.Respositories.Irrf.Interface;
+using CalculoImposto.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CalculoImposto.Infrastructure.Repositories.Irrf;
 
-public class IrrfRepository : IIrrfRepository
+public class IrrfRepository(AppDbContext _appDbContext) : IIrrfRepository
 {
-    public Task<Domain.Entities.Irrf> Create(Domain.Entities.Irrf irrf)
+    public async Task<Domain.Entities.Irrf> CreateAsync(Domain.Entities.Irrf irrf, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await _appDbContext.Irrf.AddAsync(irrf, cancellationToken);
+        return irrf;
     }
-
-    public Task<decimal> DeductionRangeCompetence(DateTime competence, int range)
+    public async Task<decimal> GetDeductionRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var valueDeduction = await _appDbContext.Irrf
+                              .AsNoTracking()
+                              .Where(w => w.Range == range &&
+                                          w.Competence == _appDbContext.Irrf
+                                                          .Where(w => w.Competence <= competence)
+                                                          .Max(m => m.Competence))
+                              .Select(s => s.Deduction)
+                              .FirstOrDefaultAsync(cancellationToken);
+        return valueDeduction;
     }
-
-    public Task<Domain.Entities.Irrf> Delete(int id)
+    public async Task<Domain.Entities.Irrf> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var irrf = await GetByIdAsync(id, cancellationToken);
+        if (irrf is null)
+        {
+            return new();
+        }
+
+        _appDbContext.Remove(irrf);
+        return irrf;
     }
-
-    public Task<IEnumerable<Domain.Entities.Irrf>> GetAll(int page, int size)
+    public async Task<IEnumerable<Domain.Entities.Irrf>> GetAllAsync(int page, int size, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        if (page < 1) page = 1;
+        if (size < 1) size = 25;
+
+        return await _appDbContext.Irrf
+                     .AsNoTracking()
+                     .OrderBy(o => o.Competence)
+                     .ThenBy(o => o.Range)
+                     .Skip((page - 1) * size)
+                     .Take(size)
+                     .ToListAsync(cancellationToken);
     }
-
-    public Task<IEnumerable<Domain.Entities.Irrf>> GetByCompetence(DateTime competence)
+    public async Task<IEnumerable<Domain.Entities.Irrf>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _appDbContext.Irrf
+                    .AsNoTracking()
+                    .OrderBy(o => o.Range)
+                    .Where(w => w.Competence == competence)
+                    .ToListAsync(cancellationToken);
     }
-
-    public Task<Domain.Entities.Irrf> GetById(int id)
+    public async Task<Domain.Entities.Irrf> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var irrf = await _appDbContext.Irrf
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
+        if (irrf is null)
+        {
+            return new();
+        }
+        return irrf;
     }
-
-    public Task<int> GetRange(DateTime competence, decimal valueGross)
+    public async Task<int> GetRangeByCompetenceAndBaseInssAsync(DateTime competence, decimal valueGross, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var range = await _appDbContext.Irrf
+                           .AsNoTracking()
+                           .Where(w => w.Value >= valueGross &&
+                                       w.Competence == _appDbContext.Irrf
+                                                       .Where(w => w.Competence <= competence)
+                                                       .Max(m => m.Competence))
+                           .MinAsync(m => m.Range, cancellationToken);
+        return range;
     }
-
-    public Task<decimal> PercentRangeCompetence(DateTime competence, int range)
+    public async Task<decimal> GetPercentRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var percentRange = await _appDbContext.Irrf
+                                 .AsNoTracking()
+                                 .Where(w => w.Competence == competence && w.Range == range)
+                                 .Select(s => s.Percent)
+                                 .FirstOrDefaultAsync(cancellationToken);
+        return percentRange;
     }
-
-    public Task<int> Total()
+    public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _appDbContext.Inss
+                     .AsNoTracking()
+                     .CountAsync(cancellationToken);
     }
-
-    public Task<Domain.Entities.Irrf> Update(Domain.Entities.Irrf irrf)
+    public async Task<Domain.Entities.Irrf> UpdateAsync(Domain.Entities.Irrf irrf, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var irrfCurrent = await GetByIdAsync(irrf.Id, cancellationToken);
+        if (irrfCurrent is null)
+        {
+            return new();
+        }
+        _appDbContext.Irrf.Update(irrf);
+        return irrf;
     }
-
-    public Task<decimal> ValueRangeCompetence(DateTime competence, int range)
+    public async Task<decimal> GetValueRangeCompetenceAsync(DateTime competence, int range, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var valueRange = await _appDbContext.Irrf
+                               .AsNoTracking()
+                               .Where(w => w.Range == range &&
+                                           w.Competence == _appDbContext.Irrf
+                                                           .Where(w => w.Competence <= competence)
+                                                           .Max(m => m.Competence))
+                               .Select(s => s.Value)
+                               .FirstOrDefaultAsync(cancellationToken);
+        return valueRange;
     }
 }
