@@ -9,7 +9,7 @@ public sealed class Handler(IIrrfRepository _irrfRepository) : IRequestHandler<C
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
-        var irrf = await _irrfRepository.CreateAsync(request.IrrfCreateDto.ToIrrfCreateDtoFromInss(), cancellationToken);
+        var irrf = await _irrfRepository.CreateAsync(request.IrrfCreateDto.ToIrrfCreateDtoFromIrrf(), cancellationToken);
         return irrf is null ? Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) :
                               Result.Success(new Response(irrf.ToIrrfFromIrrfDto()));
     }

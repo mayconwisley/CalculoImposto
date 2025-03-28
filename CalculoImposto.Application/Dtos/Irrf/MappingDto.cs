@@ -38,7 +38,7 @@ public static class MappingDto
             Value = irrfDto.Value
         };
     }
-    public static Domain.Entities.Irrf ToIrrfCreateDtoFromInss(this IrrfCreateDto irrfCreateDto)
+    public static Domain.Entities.Irrf ToIrrfCreateDtoFromIrrf(this IrrfCreateDto irrfCreateDto)
     {
         return new Domain.Entities.Irrf()
         {
