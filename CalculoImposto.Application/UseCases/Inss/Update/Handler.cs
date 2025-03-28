@@ -5,11 +5,12 @@ using MediatR;
 
 namespace CalculoImposto.Application.UseCases.Inss.Update;
 
-public sealed class Handler(IInssRepository _inssRepository) : IRequestHandler<Command, Result<Response>>
+public sealed class Handler(IInssRepository _inssRepository, IUnitOfWork _unitOfWork) : IRequestHandler<Command, Result<Response>>
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
         var inss = await _inssRepository.UpdateAsync(request.InssDto.ToInssDtoFromInss(), cancellationToken);
+        await _unitOfWork.CommitAsynk();
         return inss is null ?
             Result.Failure<Response>(Error.BadRequest("Conteudo Nulo")) :
             Result.Success(new Response(inss.ToInssFromInssDto()));
