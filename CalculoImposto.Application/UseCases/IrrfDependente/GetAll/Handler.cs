@@ -10,7 +10,7 @@ public sealed class Handler(IDependenteRepository _dependenteRepository) : IRequ
 {
     public async Task<Result<Response>> Handle(Command request, CancellationToken cancellationToken)
     {
-        var totalItems = await _dependenteRepository.GetTotalAsync(cancellationToken);
+        var totalItems = await _dependenteRepository.GetCountAsync(cancellationToken);
         var totalPages = (int)Math.Ceiling((decimal)totalItems / request.Size);
         var dependenteList = await _dependenteRepository.GetAllAsync(request.Page, request.Size, cancellationToken);
 

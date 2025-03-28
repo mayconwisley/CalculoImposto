@@ -9,5 +9,5 @@ public interface IDependenteRepository
     Task<Entities.Dependente?> UpdateAsync(Entities.Dependente dependente, CancellationToken cancellationToken = default);
     Task<Entities.Dependente?> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     Task<decimal> GetValueByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default);
-    Task<int> GetTotalAsync(CancellationToken cancellationToken = default);
+    Task<int> GetCountAsync(CancellationToken cancellationToken = default);
 }

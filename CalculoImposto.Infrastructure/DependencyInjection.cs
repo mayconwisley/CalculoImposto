@@ -12,6 +12,9 @@ public static class DependencyInjection
     {
         services.AddTransient<IInssRepository, InssRepository>();
         services.AddTransient<IIrrfRepository, IrrfRepository>();
+        services.AddTransient<ISimplificadoRepository, SimplificadoRepository>();
+        services.AddTransient<IDependenteRepository, DependenteRepository>();
+        services.AddTransient<IDescontoMinimoRespository, DescontoMinimoRepository>();
 
         return services;
     }

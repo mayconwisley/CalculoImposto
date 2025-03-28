@@ -55,9 +55,9 @@ public class DependenteRepository(AppDbContext _appDbContext) : IDependenteRepos
         return dependente;
     }
 
-    public Task<int> GetTotalAsync(CancellationToken cancellationToken = default)
+    public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _appDbContext.Dependentes.CountAsync(cancellationToken);
     }
 
     public async Task<decimal> GetValueByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)

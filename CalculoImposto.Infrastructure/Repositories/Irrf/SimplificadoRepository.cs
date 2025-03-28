@@ -12,7 +12,6 @@ public class SimplificadoRepository(AppDbContext _appDbContext) : ISimplificadoR
         await _appDbContext.AddAsync(simplificado, cancellationToken);
         return simplificado;
     }
-
     public async Task<Simplificado?> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var simplificado = await GetByIdAsync(id, cancellationToken);
@@ -23,7 +22,6 @@ public class SimplificadoRepository(AppDbContext _appDbContext) : ISimplificadoR
         _appDbContext.Remove(simplificado);
         return simplificado;
     }
-
     public async Task<IEnumerable<Simplificado?>> GetAllAsync(int page, int size, string search, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Simplificados
@@ -33,7 +31,6 @@ public class SimplificadoRepository(AppDbContext _appDbContext) : ISimplificadoR
                                   .Take(size)
                                   .ToListAsync(cancellationToken);
     }
-
     public async Task<IEnumerable<Simplificado?>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Simplificados
@@ -42,7 +39,6 @@ public class SimplificadoRepository(AppDbContext _appDbContext) : ISimplificadoR
                                   .Where(w => w.Competence == competence)
                                   .ToListAsync(cancellationToken);
     }
-
     public async Task<Simplificado?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var simplificado = await _appDbContext.Simplificados
@@ -54,12 +50,10 @@ public class SimplificadoRepository(AppDbContext _appDbContext) : ISimplificadoR
         }
         return simplificado;
     }
-
     public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Simplificados.CountAsync(cancellationToken);
     }
-
     public async Task<decimal> GetValueCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var value = await _appDbContext.Simplificados
@@ -69,7 +63,6 @@ public class SimplificadoRepository(AppDbContext _appDbContext) : ISimplificadoR
                                        .FirstOrDefaultAsync(cancellationToken);
         return value;
     }
-
     public async Task<Simplificado?> UpdateAsync(Simplificado simplificado, CancellationToken cancellationToken = default)
     {
         var simplificadoCurrent = await GetByIdAsync(simplificado.Id, cancellationToken);
