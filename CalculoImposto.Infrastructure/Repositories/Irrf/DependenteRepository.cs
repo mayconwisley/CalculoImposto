@@ -27,27 +27,27 @@ public class DependenteRepository(AppDbContext _appDbContext) : IDependenteRepos
     public async Task<IEnumerable<Dependente?>> GetAllAsync(int page, int size, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Dependentes
-                    .AsNoTracking()
-                    .OrderBy(o => o.Competence)
-                    .Skip((page - 1) * size)
-                    .Take(size)
-                    .ToListAsync(cancellationToken);
+                                  .AsNoTracking()
+                                  .OrderBy(o => o.Competence)
+                                  .Skip((page - 1) * size)
+                                  .Take(size)
+                                  .ToListAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Dependente?>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Dependentes
-                    .AsNoTracking()
-                    .OrderBy(o => o.Competence)
-                    .Where(w => w.Competence == competence)
-                    .ToListAsync(cancellationToken);
+                                  .AsNoTracking()
+                                  .OrderBy(o => o.Competence)
+                                  .Where(w => w.Competence == competence)
+                                  .ToListAsync(cancellationToken);
     }
 
     public async Task<Dependente?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var dependente = await _appDbContext.Dependentes
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);
         if (dependente is null)
         {
             return null;
@@ -63,10 +63,10 @@ public class DependenteRepository(AppDbContext _appDbContext) : IDependenteRepos
     public async Task<decimal> GetValueByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         var value = await _appDbContext.Dependentes
-                          .AsNoTracking()
-                          .Where(w => w.Competence == competence)
-                          .Select(s => s.Value)
-                          .FirstOrDefaultAsync(cancellationToken);
+                                       .AsNoTracking()
+                                       .Where(w => w.Competence == competence)
+                                       .Select(s => s.Value)
+                                       .FirstOrDefaultAsync(cancellationToken);
         return value;
     }
 
