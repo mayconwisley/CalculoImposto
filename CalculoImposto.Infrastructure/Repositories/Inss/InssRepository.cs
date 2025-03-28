@@ -6,12 +6,12 @@ namespace CalculoImposto.Infrastructure.Repositories.Inss;
 
 public class InssRepository(AppDbContext _appDbContext) : IInssRepository
 {
-    public async Task<Domain.Entities.Inss> CreateAsync(Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
+    public async Task<Domain.Entities.Inss?> CreateAsync(Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
     {
         await _appDbContext.Inss.AddAsync(inss, cancellationToken);
         return inss;
     }
-    public async Task<Domain.Entities.Inss> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Domain.Entities.Inss?> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var inss = await GetByIdAsync(id, cancellationToken);
         if (inss is null)
@@ -22,7 +22,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
         _appDbContext.Remove(inss);
         return inss;
     }
-    public async Task<IEnumerable<Domain.Entities.Inss>> GetAllAsync(int page = 1, int size = 25, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Domain.Entities.Inss?>> GetAllAsync(int page = 1, int size = 25, CancellationToken cancellationToken = default)
     {
         if (page < 1) page = 1;
         if (size < 1) size = 25;
@@ -35,7 +35,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
                      .Take(size)
                      .ToListAsync(cancellationToken);
     }
-    public async Task<IEnumerable<Domain.Entities.Inss>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Domain.Entities.Inss?>> GetByCompetenceAsync(DateTime competence, CancellationToken cancellationToken = default)
     {
         return await _appDbContext.Inss
                      .AsNoTracking()
@@ -43,7 +43,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
                      .Where(w => w.Competence == competence)
                      .ToListAsync(cancellationToken);
     }
-    public async Task<Domain.Entities.Inss> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Domain.Entities.Inss?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var inss = await _appDbContext.Inss
                         .AsNoTracking()
@@ -90,7 +90,7 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
                                .CountAsync(cancellationToken);
         return totalRange;
     }
-    public async Task<Domain.Entities.Inss> UpdateAsync(Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
+    public async Task<Domain.Entities.Inss?> UpdateAsync(Domain.Entities.Inss inss, CancellationToken cancellationToken = default)
     {
         var inssCurrent = await GetByIdAsync(inss.Id, cancellationToken);
         if (inssCurrent is null)
