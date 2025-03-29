@@ -3,30 +3,30 @@ using CalculoImposto.Domain.Services.Inss.Interface;
 
 namespace CalculoImposto.Domain.Services.Inss;
 
-public class InssCalculoService(DateTime _competence, decimal _baseInss, IInssRepository _inssRepository) : IInssCalculoService
+public class InssCalculoService(IInssRepository _inssRepository) : IInssCalculoService
 {
-    public async Task<decimal> CalculoNormal()
+    public async Task<decimal> CalculoNormal(DateTime competence, decimal baseInss)
     {
         decimal discount = 0m, previousValue = 0m;
 
 
-        decimal tetoInss = await _inssRepository.GetValueRoofCompetenceAsync(_competence);
-        if (_baseInss > tetoInss)
-            _baseInss = tetoInss;
+        decimal tetoInss = await _inssRepository.GetValueRoofCompetenceAsync(competence);
+        if (baseInss > tetoInss)
+            baseInss = tetoInss;
 
-        int range = await _inssRepository.GetRangeByCompetenceAndBaseInssAsync(_competence, _baseInss);
+        int range = await _inssRepository.GetRangeByCompetenceAndBaseInssAsync(competence, baseInss);
 
         for (int i = 1; i <= range; i++)
         {
-            decimal percent = await _inssRepository.GetPercentRangeCompetenceAsync(_competence, i);
-            decimal value = await _inssRepository.GetValueRangeCompetenceAsync(_competence, i);
+            decimal percent = await _inssRepository.GetPercentRangeCompetenceAsync(competence, i);
+            decimal value = await _inssRepository.GetValueRangeCompetenceAsync(competence, i);
             decimal baseCalcInss = value - previousValue;
 
-            if (value > _baseInss)
-                baseCalcInss = _baseInss - previousValue;
+            if (value > baseInss)
+                baseCalcInss = baseInss - previousValue;
 
-            if (baseCalcInss > _baseInss)
-                baseCalcInss = _baseInss - previousValue;
+            if (baseCalcInss > baseInss)
+                baseCalcInss = baseInss - previousValue;
 
             discount += baseCalcInss * (percent / 100);
             previousValue = value;

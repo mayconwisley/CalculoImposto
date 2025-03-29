@@ -2,5 +2,5 @@
 
 public interface IInssCalculoService
 {
-    Task<decimal> CalculoNormal();
+    Task<decimal> CalculoNormal(DateTime competence, decimal baseInss);
 }

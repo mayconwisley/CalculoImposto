@@ -77,7 +77,10 @@ public class InssRepository(AppDbContext _appDbContext) : IInssRepository
     {
         var percentRange = await _appDbContext.Inss
                                  .AsNoTracking()
-                                 .Where(w => w.Competence == competence && w.Range == range)
+                                 .Where(w => w.Range == range &&
+                                             w.Competence == _appDbContext.Inss
+                                                             .Where(w => w.Competence <= competence)
+                                                             .Max(m => m.Competence))
                                  .Select(s => s.Percent)
                                  .FirstOrDefaultAsync(cancellationToken);
         return percentRange;

@@ -19,8 +19,9 @@ public static class DependencyInjection
         services.AddTransient<ISimplificadoRepository, SimplificadoRepository>();
         services.AddTransient<IDependenteRepository, DependenteRepository>();
         services.AddTransient<IDescontoMinimoRespository, DescontoMinimoRepository>();
-        services.AddTransient<IInssCalculoService, InssCalculoService>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IInssCalculoService, InssCalculoService>();
 
         return services;
     }
