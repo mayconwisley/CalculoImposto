@@ -1,6 +1,8 @@
 ﻿using CalculoImposto.Domain.Abstractions;
 using CalculoImposto.Domain.Respositories.Inss.Interface;
 using CalculoImposto.Domain.Respositories.Irrf.Interface;
+using CalculoImposto.Domain.Services.Inss;
+using CalculoImposto.Domain.Services.Inss.Interface;
 using CalculoImposto.Infrastructure.Data;
 using CalculoImposto.Infrastructure.Repositories.Inss;
 using CalculoImposto.Infrastructure.Repositories.Irrf;
@@ -17,6 +19,7 @@ public static class DependencyInjection
         services.AddTransient<ISimplificadoRepository, SimplificadoRepository>();
         services.AddTransient<IDependenteRepository, DependenteRepository>();
         services.AddTransient<IDescontoMinimoRespository, DescontoMinimoRepository>();
+        services.AddTransient<IInssCalculoService, InssCalculoService>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         return services;
