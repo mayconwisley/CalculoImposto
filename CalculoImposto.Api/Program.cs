@@ -3,10 +3,15 @@ using CalculoImposto.Infrastructure;
 using CalculoImposto.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
@@ -28,7 +33,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapScalarApiReference(opt =>
     {
-        opt.Title = "Calculo Imposto API";
+        opt.WithTitle("Calculo Imposto API")
+            .WithTheme(ScalarTheme.Mars)
+            .WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Axios);
     });
 }
 
